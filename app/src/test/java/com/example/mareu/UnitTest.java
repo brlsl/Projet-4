@@ -1,6 +1,10 @@
 package com.example.mareu;
 
+import com.example.mareu.model.Meeting;
+
 import org.junit.Test;
+
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -9,9 +13,11 @@ import static org.junit.Assert.*;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-public class ExampleUnitTest {
+public class UnitTest {
+
     @Test
-    public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
+    public void getMeetingsWithSuccess() {
+
     }
+
 }

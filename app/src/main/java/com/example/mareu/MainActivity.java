@@ -5,17 +5,24 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
 
+import android.widget.ImageView;
+
+
+import com.example.mareu.api.MeetingApiServiceGenerator;
 import com.example.mareu.model.Meeting;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RecyclerView mRecyclerView;
-    private List <Meeting> mMeetingList;
-    private MyMeetingAdapter mMeetingAdapter;
+    //for design
+    static RecyclerView mRecyclerView;
+    private FloatingActionButton fab_button;
+    private ImageView delete_item_button;
+
+    //for data
+    static MyMeetingAdapter mMeetingAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,24 +31,33 @@ public class MainActivity extends AppCompatActivity {
 
         mRecyclerView = findViewById(R.id.recyclerView);
 
-        mMeetingList = new ArrayList<>();
-
-        mMeetingList.add(new Meeting("Chine"));
-        mMeetingList.add(new Meeting("France"));
-        mMeetingList.add(new Meeting("Brésil"));
-        mMeetingList.add(new Meeting("Allemagne"));
-        mMeetingList.add(new Meeting("Italie"));
-        mMeetingList.add(new Meeting("Suède"));
-        mMeetingList.add(new Meeting("Grèce"));
-        mMeetingList.add(new Meeting("Etats-unis"));
-        mMeetingList.add(new Meeting("Argentine"));
-        mMeetingList.add(new Meeting("Japon"));
-        mMeetingList.add(new Meeting("Australie"));
-        mMeetingList.add(new Meeting("Suède"));
-
-        mMeetingAdapter= new MyMeetingAdapter(mMeetingList);
+        // get List and adapt to RecyclerView
+        mMeetingAdapter= new MyMeetingAdapter(MeetingApiServiceGenerator.generateMeetingList());
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mRecyclerView.setAdapter(mMeetingAdapter);
+
+
+        // when user clicks on fab, it opens a dialog window
+        fab_button = findViewById(R.id.fab_add_reunion);
+        fab_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialog();
+
+
+            }
+        });
     }
+
+
+
+
+    public void openDialog(){
+        MeetingDialog meetingDialog = new MeetingDialog();
+        meetingDialog.show(getSupportFragmentManager(),"tag");
+
+    }
+
+
 }
