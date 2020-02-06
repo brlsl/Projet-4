@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mareu.api.MeetingApiService;
-import com.example.mareu.api.MeetingApiServiceGenerator;
 import com.example.mareu.model.Meeting;
 
 import java.util.List;
@@ -52,8 +51,8 @@ public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.View
          public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            mMeetingInformation = itemView.findViewById(R.id.meeting_information);
-            mMeetingParticipants = itemView.findViewById(R.id.participant_list);
+            mMeetingInformation = itemView.findViewById(R.id.meeting_information_TV);
+            mMeetingParticipants = itemView.findViewById(R.id.participant_TV);
             mDeleteItem = itemView.findViewById(R.id.item_delete_btn);
         }
 
@@ -68,13 +67,10 @@ public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.View
                      // refresh RecyclerView
                      MainActivity.mMeetingAdapter.notifyDataSetChanged();
 
-                     //Toast.makeText(MainActivity.this, "La réunion a été supprimée", Toast.LENGTH_SHORT).show();
-
-
+                     // Toast.makeText(  , "La réunion a été supprimée", Toast.LENGTH_SHORT).show();
 
                  }
              });
-
 
         }
 

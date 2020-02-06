@@ -1,25 +1,26 @@
 package com.example.mareu;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
-
-import android.widget.ImageView;
-
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mareu.api.MeetingApiServiceGenerator;
 import com.example.mareu.model.Meeting;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     //for design
     static RecyclerView mRecyclerView;
     private FloatingActionButton fab_button;
-    private ImageView delete_item_button;
 
     //for data
     static MyMeetingAdapter mMeetingAdapter;
@@ -37,27 +38,20 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mRecyclerView.setAdapter(mMeetingAdapter);
 
-
         // when user clicks on fab, it opens a dialog window
         fab_button = findViewById(R.id.fab_add_reunion);
         fab_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openDialog();
-
-
             }
         });
     }
-
-
-
 
     public void openDialog(){
         MeetingDialog meetingDialog = new MeetingDialog();
         meetingDialog.show(getSupportFragmentManager(),"tag");
 
     }
-
 
 }

@@ -13,13 +13,10 @@ public abstract class MeetingApiServiceGenerator {
     }
 
     private static List <Meeting> MEETING_LIST = Arrays.asList(
-            new Meeting("a","b","c", "aaaaaaaaaaaaaaaaaaa@gmail.com"),
-            new Meeting("d","e", "f", "test@gmail.com, test2@gmail.com"),
-            new Meeting("g","h", "i", "test@gmail.com, test2@gmail.com"),
-            new Meeting("j","k", "l", "test@gmail.com, test2@gmail.com"),
-            new Meeting("m","n", "o", "test@gmail.com, test2@gmail.com"),
-            new Meeting("p","p", "q", "test@gmail.com, test2@gmail.com"),
-            new Meeting("r","s", "t","test@gmail.com, test2@gmail.com")
+            new Meeting("place1","12h00","sujet1","test@gmail.com, test2@gmail.com, test3@gmail.com"),
+            new Meeting("place2","12h00","sujet2","test@gmail.com, test2@gmail.com"),
+            new Meeting("place3","12h00","sujet3","test@gmail.com, test2@gmail.com"),
+            new Meeting("place4","12h00","sujet4","test@gmail.com, test2@gmail.com")
     );
 
 }
