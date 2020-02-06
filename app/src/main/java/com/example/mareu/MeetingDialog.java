@@ -18,6 +18,8 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 import com.example.mareu.model.Meeting;
 
 
+import java.util.Calendar;
+
 import static com.example.mareu.MainActivity.mMeetingAdapter;
 
 public class MeetingDialog extends AppCompatDialogFragment {
@@ -27,7 +29,11 @@ public class MeetingDialog extends AppCompatDialogFragment {
     private EditText editTextPlace;
     private EditText editTextParticipants;
 
-    private TimePickerDialog timePickerDialog;
+    private TimePickerDialog mTimePickerDialog;
+    private Calendar mCalendar;
+    int currentHour;
+    int currentMinute;
+
 
     @NonNull
     @Override
@@ -41,6 +47,7 @@ public class MeetingDialog extends AppCompatDialogFragment {
         editTextHour = view.findViewById(R.id.meeting_hour_ET);
         editTextPlace = view.findViewById(R.id.meeting_place_ET);
         editTextParticipants = view.findViewById(R.id.meeting_participants_ET);
+        setTimePickerDialog();
 
         builder.setView(view)
                 .setTitle("Ajouter une nouvelle réunion")
@@ -49,7 +56,7 @@ public class MeetingDialog extends AppCompatDialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        setTimePickerDialog();
+
                         String subject = editTextSubject.getText().toString();
                         String hour = editTextHour.getText().toString();
                         String place = editTextPlace.getText().toString();
@@ -85,15 +92,20 @@ public class MeetingDialog extends AppCompatDialogFragment {
         editTextHour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                timePickerDialog = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+                //for configuring current device time
+                mCalendar = Calendar.getInstance();
+                currentHour = mCalendar.get(Calendar.HOUR_OF_DAY);
+                currentMinute = mCalendar.get(Calendar.MINUTE);
+
+                mTimePickerDialog = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
                     //when user click on the editText, it opens the TimePickerDialog
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         editTextHour.setText(hourOfDay +":" + minute );
 
                     }
-                }, 0,0,false);
-                timePickerDialog.show();
+                }, currentHour, currentMinute,true);
+                mTimePickerDialog.show();
             }
         });
     }
