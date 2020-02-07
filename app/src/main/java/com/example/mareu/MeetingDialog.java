@@ -17,7 +17,6 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 
 import com.example.mareu.model.Meeting;
 
-
 import java.util.Calendar;
 
 import static com.example.mareu.MainActivity.mMeetingAdapter;
@@ -52,11 +51,16 @@ public class MeetingDialog extends AppCompatDialogFragment {
         builder.setView(view)
                 .setTitle("Ajouter une nouvelle réunion")
                 .setNegativeButton("Annuler", null)
-                .setPositiveButton("Confirmer", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                .setPositiveButton("Confirmer", null);
 
 
+        Dialog dialog = builder.create();
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(final DialogInterface dialog) {
+                ((AlertDialog)dialog).getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        // do some validation logic
                         String subject = editTextSubject.getText().toString();
                         String hour = editTextHour.getText().toString();
                         String place = editTextPlace.getText().toString();
@@ -69,16 +73,19 @@ public class MeetingDialog extends AppCompatDialogFragment {
 
                             applyTextsToList(subject, hour, place, participant);
                             Toast.makeText(getContext(), "La réunion a été ajoutée", Toast.LENGTH_SHORT).show();
+
+                            dialog.dismiss();
                         }
                         else {
-                             Toast.makeText(getContext(), "Veuillez compléter tous les champs", Toast.LENGTH_SHORT).show();
-                            }
+                            Toast.makeText(getContext(), "Veuillez compléter tous les champs", Toast.LENGTH_SHORT).show();
+                        }
                     }
-
                 });
+            }
+        });
 
         // show alert dialog
-        return builder.show();
+        return dialog;
 
     }
 

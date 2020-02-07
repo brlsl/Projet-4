@@ -1,5 +1,6 @@
 package com.example.mareu;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +19,11 @@ import java.util.List;
 public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.ViewHolder> {
 
     static List<Meeting> mMeetingList;
+    private Context context;
 
-    public MyMeetingAdapter(List<Meeting> mMeetingList) {
+    public MyMeetingAdapter(List<Meeting> mMeetingList, Context context) {
         this.mMeetingList = mMeetingList;
+        this.context = context;
     }
 
     @NonNull
@@ -67,7 +70,7 @@ public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.View
                      // refresh RecyclerView
                      MainActivity.mMeetingAdapter.notifyDataSetChanged();
 
-                     // Toast.makeText(  , "La réunion a été supprimée", Toast.LENGTH_SHORT).show();
+                      Toast.makeText(context, "La réunion a été supprimée", Toast.LENGTH_SHORT).show();
 
                  }
              });

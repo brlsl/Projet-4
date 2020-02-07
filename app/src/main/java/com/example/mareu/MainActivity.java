@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.recyclerView);
 
         // get List and adapt to RecyclerView
-        mMeetingAdapter= new MyMeetingAdapter(MeetingApiServiceGenerator.generateMeetingList());
+        mMeetingAdapter= new MyMeetingAdapter(MeetingApiServiceGenerator.generateMeetingList(), this);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mRecyclerView.setAdapter(mMeetingAdapter);
