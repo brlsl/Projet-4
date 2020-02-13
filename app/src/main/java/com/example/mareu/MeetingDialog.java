@@ -30,8 +30,8 @@ public class MeetingDialog extends AppCompatDialogFragment {
 
     private TimePickerDialog mTimePickerDialog;
     private Calendar mCalendar;
-    int currentHour;
-    int currentMinute;
+    private int currentHour;
+    private int currentMinute;
 
 
     @NonNull
@@ -53,20 +53,19 @@ public class MeetingDialog extends AppCompatDialogFragment {
                 .setNegativeButton("Annuler", null)
                 .setPositiveButton("Confirmer", null);
 
-
         Dialog dialog = builder.create();
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(final DialogInterface dialog) {
                 ((AlertDialog)dialog).getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
-                        // do some validation logic
+
                         String subject = editTextSubject.getText().toString();
                         String hour = editTextHour.getText().toString();
                         String place = editTextPlace.getText().toString();
                         String participant = editTextParticipants.getText().toString();
 
-
+                        // if all form are filled,
                         if (!(editTextSubject.getText().toString().isEmpty() || editTextHour.getText().toString().isEmpty()
                                 || editTextPlace.getText().toString().isEmpty()
                                 || editTextParticipants.getText().toString().isEmpty())){
@@ -84,18 +83,21 @@ public class MeetingDialog extends AppCompatDialogFragment {
             }
         });
 
+        // prevent dialog box from getting dismissed on outside touch
+        dialog.setCanceledOnTouchOutside(false);
+
         // show alert dialog
         return dialog;
 
     }
 
-    public void applyTextsToList(String subject, String hour, String place, String participant) {
+    private void applyTextsToList(String subject, String hour, String place, String participant) {
         Meeting new_meeting = new Meeting(place, hour, subject, participant);
         MyMeetingAdapter.mMeetingList.add(new_meeting);
         mMeetingAdapter.notifyDataSetChanged();
     }
 
-    public void setTimePickerDialog(){
+    private void setTimePickerDialog(){
         editTextHour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,7 +110,17 @@ public class MeetingDialog extends AppCompatDialogFragment {
                     //when user click on the editText, it opens the TimePickerDialog
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        editTextHour.setText(hourOfDay +":" + minute );
+                        if(hourOfDay < 10 && minute <10){
+                            editTextHour.setText("0" + hourOfDay +"h" + "0" + minute );
+                        }
+                        else if (minute < 10){
+                            editTextHour.setText(hourOfDay +"h" +"0"+ minute );
+                        }
+                        else if(hourOfDay < 10){
+                            editTextHour.setText("0" + hourOfDay +"h" + minute );
+                        }
+                        else
+                            editTextHour.setText(hourOfDay +"h" + minute);
 
                     }
                 }, currentHour, currentMinute,true);
