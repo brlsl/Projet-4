@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -23,10 +25,11 @@ import static com.example.mareu.MainActivity.mMeetingAdapter;
 
 public class MeetingDialog extends AppCompatDialogFragment {
 
-    private EditText editTextSubject;
-    private EditText editTextHour;
-    private EditText editTextPlace;
-    private EditText editTextParticipants;
+    private EditText mSubject_ET;
+    private TextView mHour_TV;
+    private EditText mPlace_ET;
+    private EditText mParticipants_ET;
+    private ImageButton mTime_IB;
 
     private TimePickerDialog mTimePickerDialog;
     private Calendar mCalendar;
@@ -42,10 +45,11 @@ public class MeetingDialog extends AppCompatDialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.add_reunion_dialog,null);
 
-        editTextSubject = view.findViewById(R.id.meeting_subject_ET);
-        editTextHour = view.findViewById(R.id.meeting_hour_ET);
-        editTextPlace = view.findViewById(R.id.meeting_place_ET);
-        editTextParticipants = view.findViewById(R.id.meeting_participants_ET);
+        mSubject_ET = view.findViewById(R.id.meeting_subject_ET);
+        mHour_TV = view.findViewById(R.id.meeting_hour_ET);
+        mTime_IB = view.findViewById(R.id.choose_time_btn);
+        mPlace_ET = view.findViewById(R.id.meeting_place_ET);
+        mParticipants_ET = view.findViewById(R.id.meeting_participants_ET);
         setTimePickerDialog();
 
         builder.setView(view)
@@ -60,15 +64,15 @@ public class MeetingDialog extends AppCompatDialogFragment {
                 ((AlertDialog)dialog).getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
 
-                        String subject = editTextSubject.getText().toString();
-                        String hour = editTextHour.getText().toString();
-                        String place = editTextPlace.getText().toString();
-                        String participant = editTextParticipants.getText().toString();
+                        String subject = mSubject_ET.getText().toString();
+                        String hour = mHour_TV.getText().toString();
+                        String place = mPlace_ET.getText().toString();
+                        String participant = mParticipants_ET.getText().toString();
 
                         // if all form are filled,
-                        if (!(editTextSubject.getText().toString().isEmpty() || editTextHour.getText().toString().isEmpty()
-                                || editTextPlace.getText().toString().isEmpty()
-                                || editTextParticipants.getText().toString().isEmpty())){
+                        if (!(mSubject_ET.getText().toString().isEmpty() || mHour_TV.getText().toString().isEmpty()
+                                || mPlace_ET.getText().toString().isEmpty()
+                                || mParticipants_ET.getText().toString().isEmpty())){
 
                             applyTextsToList(subject, hour, place, participant);
                             Toast.makeText(getContext(), "La réunion a été ajoutée", Toast.LENGTH_SHORT).show();
@@ -98,7 +102,7 @@ public class MeetingDialog extends AppCompatDialogFragment {
     }
 
     private void setTimePickerDialog(){
-        editTextHour.setOnClickListener(new View.OnClickListener() {
+        mTime_IB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //for configuring current device time
@@ -111,16 +115,16 @@ public class MeetingDialog extends AppCompatDialogFragment {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         if(hourOfDay < 10 && minute <10){
-                            editTextHour.setText("0" + hourOfDay +"h" + "0" + minute );
+                            mHour_TV.setText("0" + hourOfDay +"h" + "0" + minute );
                         }
                         else if (minute < 10){
-                            editTextHour.setText(hourOfDay +"h" +"0"+ minute );
+                            mHour_TV.setText(hourOfDay +"h" +"0"+ minute );
                         }
                         else if(hourOfDay < 10){
-                            editTextHour.setText("0" + hourOfDay +"h" + minute );
+                            mHour_TV.setText("0" + hourOfDay +"h" + minute );
                         }
                         else
-                            editTextHour.setText(hourOfDay +"h" + minute);
+                            mHour_TV.setText(hourOfDay +"h" + minute);
 
                     }
                 }, currentHour, currentMinute,true);
