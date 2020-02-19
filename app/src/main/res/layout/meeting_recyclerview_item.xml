@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <ImageView
-        android:id="@+id/color_code"
+        android:id="@+id/color_avatar"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="16dp"
@@ -34,7 +34,7 @@
         android:textSize="16dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/item_delete_btn"
-        app:layout_constraintStart_toEndOf="@+id/color_code"
+        app:layout_constraintStart_toEndOf="@+id/color_avatar"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -46,11 +46,13 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="24dp"
-        android:text="Participants"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:text="@string/participants_mails"
         android:textColor="#434343"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/item_delete_btn"
-        app:layout_constraintStart_toEndOf="@+id/color_code"
+        app:layout_constraintStart_toEndOf="@+id/color_avatar"
         app:layout_constraintTop_toBottomOf="@+id/meeting_information_TV" />
 
     <ImageView

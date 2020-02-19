@@ -11,5 +11,7 @@
     <string name="hint_place" >Indiquez le lieu</string>
     <string name="hint_participants" >Indiquez les mails des participants</string>
     <string name="hint_participants_tv" >Exemple: adresse1@mail.com; adresse2@mail.com; &#8230; </string>
+    <string name="participants_mails">Participants mails</string>
+
 
 </resources>

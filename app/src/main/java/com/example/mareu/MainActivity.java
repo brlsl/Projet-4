@@ -11,8 +11,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.example.mareu.api.MeetingApiServiceGenerator;
+
+import com.example.mareu.service.DummyMeetingApiServiceGenerator;
 import com.example.mareu.model.Meeting;
+import com.example.mareu.service.MeetingApiService;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Collections;
@@ -23,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     //for design
     static RecyclerView mRecyclerView;
     private FloatingActionButton fab_button;
+    private MeetingApiService mMeetingApiService;
 
     //for data
     static MyMeetingAdapter mMeetingAdapter;
@@ -35,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.recyclerView);
 
         // get List and adapt to RecyclerView
-        mMeetingAdapter= new MyMeetingAdapter(MeetingApiServiceGenerator.generateMeetingList(), this);
+        mMeetingAdapter= new MyMeetingAdapter(DummyMeetingApiServiceGenerator.generateMeetingList(), this);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mRecyclerView.setAdapter(mMeetingAdapter);
@@ -125,7 +128,24 @@ public class MainActivity extends AppCompatActivity {
     public void openDialog(){
         MeetingDialog meetingDialog = new MeetingDialog();
         meetingDialog.show(getSupportFragmentManager(),"opens the dialog box");
-
+    }
+/*
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void onDeleteMeeting(DeleteMeetingEvent event) {
+        mMeetingApiService.deleteMeeting(event.meeting);
+    }
+
+ */
 }

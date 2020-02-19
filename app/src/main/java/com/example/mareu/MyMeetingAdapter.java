@@ -11,8 +11,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mareu.api.MeetingApiService;
+import com.example.mareu.di.DI;
 import com.example.mareu.model.Meeting;
+import com.example.mareu.service.MeetingApiService;
 
 import java.util.List;
 
@@ -20,6 +21,17 @@ public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.View
 
     static List<Meeting> mMeetingList;
     private Context context;
+    private MeetingApiService mApiService;
+
+    private OnItemClickListener mListener;
+
+    public interface OnItemClickListener{
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        mListener = listener;
+    }
 
     public MyMeetingAdapter(List<Meeting> mMeetingList, Context context) {
         this.mMeetingList = mMeetingList;
@@ -38,6 +50,7 @@ public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.View
 
         holder.display(mMeetingList.get(position));
 
+
     }
 
     @Override
@@ -49,28 +62,30 @@ public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView mMeetingInformation;
         private TextView mMeetingParticipants;
-        private ImageView mDeleteItem;
+        private ImageView mDelete;
 
          public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             mMeetingInformation = itemView.findViewById(R.id.meeting_information_TV);
             mMeetingParticipants = itemView.findViewById(R.id.participant_TV);
-            mDeleteItem = itemView.findViewById(R.id.item_delete_btn);
+            mDelete = itemView.findViewById(R.id.item_delete_btn);
         }
 
         public void display(final Meeting meeting){
-             mMeetingInformation.setText(meeting.getPlace()+" - " + meeting.getHour()+" - " + meeting.getSubject());
+             mMeetingInformation.setText(meeting.getSubject()+" - " + meeting.getHour()+" - " + meeting.getPlace());
              mMeetingParticipants.setText(meeting.getParticipant());
 
-             mDeleteItem.setOnClickListener(new View.OnClickListener() {
+             mDelete.setOnClickListener(new View.OnClickListener() {
                  @Override
                  public void onClick(View view) {
+                     mApiService = DI.getMeetingApiService();
+                     //mApiService.deleteMeeting(meeting);
+
                      mMeetingList.remove(meeting);
                      // refresh RecyclerView
                      MainActivity.mMeetingAdapter.notifyDataSetChanged();
-
-                      Toast.makeText(context, "La réunion a été supprimée", Toast.LENGTH_SHORT).show();
+                     Toast.makeText(context, "La réunion a été supprimée", Toast.LENGTH_SHORT).show();
 
                  }
              });

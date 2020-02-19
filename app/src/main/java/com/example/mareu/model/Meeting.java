@@ -6,10 +6,10 @@ public class Meeting {
     private String subject;
     private String participant;
 
-    public Meeting(String place, String hour, String subject, String participant) {
-        this.place = place;
-        this.hour = hour;
+    public Meeting(String subject, String hour, String place, String participant) {
         this.subject = subject;
+        this.hour = hour;
+        this.place = place;
         this.participant = participant;
     }
 
