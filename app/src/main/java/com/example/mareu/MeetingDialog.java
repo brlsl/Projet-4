@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -17,7 +18,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
+import com.example.mareu.di.DI;
 import com.example.mareu.model.Meeting;
+import com.example.mareu.service.MeetingApiService;
 
 import java.util.Calendar;
 
@@ -30,6 +33,8 @@ public class MeetingDialog extends AppCompatDialogFragment {
     private EditText mPlace_ET;
     private EditText mParticipants_ET;
     private ImageButton mTime_IB;
+
+    private MeetingApiService mMeetingApiService;
 
     private TimePickerDialog mTimePickerDialog;
     private Calendar mCalendar;
@@ -45,11 +50,14 @@ public class MeetingDialog extends AppCompatDialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.add_reunion_dialog,null);
 
+        mMeetingApiService = DI.getMeetingApiService();
+
         mSubject_ET = view.findViewById(R.id.meeting_subject_ET);
         mHour_TV = view.findViewById(R.id.meeting_hour_ET);
         mTime_IB = view.findViewById(R.id.choose_time_btn);
         mPlace_ET = view.findViewById(R.id.meeting_place_ET);
         mParticipants_ET = view.findViewById(R.id.meeting_participants_ET);
+
         setTimePickerDialog();
 
         builder.setView(view)
@@ -97,7 +105,7 @@ public class MeetingDialog extends AppCompatDialogFragment {
 
     private void applyTextsToList(String subject, String hour, String place, String participant) {
         Meeting new_meeting = new Meeting(place, hour, subject, participant);
-        MyMeetingAdapter.mMeetingList.add(new_meeting);
+        mMeetingApiService.addMeeting(new_meeting);
         mMeetingAdapter.notifyDataSetChanged();
     }
 

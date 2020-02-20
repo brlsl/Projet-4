@@ -10,8 +10,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 
+import com.example.mareu.di.DI;
 import com.example.mareu.service.DummyMeetingApiServiceGenerator;
 import com.example.mareu.model.Meeting;
 import com.example.mareu.service.MeetingApiService;
@@ -19,29 +23,31 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     //for design
     static RecyclerView mRecyclerView;
+    static MyMeetingAdapter mMeetingAdapter;
     private FloatingActionButton fab_button;
-    private MeetingApiService mMeetingApiService;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     //for data
-    static MyMeetingAdapter mMeetingAdapter;
+
+    private MeetingApiService mMeetingApiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mRecyclerView = findViewById(R.id.recyclerView);
+        mMeetingApiService = DI.getMeetingApiService();
+        mMeetingApiService.getMeetingList();
 
-        // get List and adapt to RecyclerView
-        mMeetingAdapter= new MyMeetingAdapter(DummyMeetingApiServiceGenerator.generateMeetingList(), this);
+        buildRecyclerView();
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        mRecyclerView.setAdapter(mMeetingAdapter);
+
 
         // when user clicks on fab, it opens a dialog window
         fab_button = findViewById(R.id.fab_add_reunion);
@@ -54,6 +60,40 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void buildRecyclerView() {
+        mRecyclerView = findViewById(R.id.recyclerView); //ok
+        // get List and adapt to RecyclerView
+        mMeetingAdapter= new MyMeetingAdapter(mMeetingApiService.getMeetingList());
+
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(mMeetingAdapter);
+
+        mMeetingAdapter.setOnItemClickListener(new MyMeetingAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Toast.makeText(MainActivity.this, "Test click sur itemView", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onDeleteClick(int position) {
+                removeItem(position);
+                Toast.makeText(MainActivity.this, "Suppression item en test", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void removeItem(int position){
+        MyMeetingAdapter.mMeetingList.remove(position);
+        mMeetingAdapter.notifyItemRemoved(position);
+    }
+
+    /*
+        public removeItem(int position){
+    
+    
+        }
+    */
     //for menu item in action bar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -67,63 +107,22 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if(id == R.id.item_1){
-            sortArrayListAZ();
+            mMeetingApiService.sortArrayListAZ();
         }
         if(id == R.id.item_2){
-            sortArrayListZA();
+            mMeetingApiService.sorArrayListZA();
         }
 
         if(id == R.id.item_3){
-            sortArrayListChronologicalOrder();
+            mMeetingApiService.sortArrayListChronologicalOrder();
         }
         if(id == R.id.item_4){
-            sortArrayListAntiChronological();
+            mMeetingApiService.sortArrayListAntiChronological();
         }
-
+        mMeetingAdapter.notifyDataSetChanged();
         return super.onOptionsItemSelected(item);
     }
 
-    // list in order from A to Z
-    private void sortArrayListAZ() {
-        Collections.sort(MyMeetingAdapter.mMeetingList, new Comparator<Meeting>() {
-            @Override
-            public int compare(Meeting o1, Meeting o2) {
-                return o1.getPlace().compareTo(o2.getPlace());
-            }
-        });
-        mMeetingAdapter.notifyDataSetChanged();
-    }
-
-    //list in order from Z to A
-    private void sortArrayListZA() {
-        Collections.sort(MyMeetingAdapter.mMeetingList, new Comparator<Meeting>() {
-            @Override
-            public int compare(Meeting o1, Meeting o2) {
-                return o2.getPlace().compareTo(o1.getPlace());
-            }
-        });
-        mMeetingAdapter.notifyDataSetChanged();
-    }
-
-    private void sortArrayListChronologicalOrder() {
-        Collections.sort(MyMeetingAdapter.mMeetingList, new Comparator<Meeting>() {
-            @Override
-            public int compare(Meeting o1, Meeting o2) {
-                return o1.getHour().compareTo(o2.getHour());
-            }
-        });
-        mMeetingAdapter.notifyDataSetChanged();
-    }
-
-    private void sortArrayListAntiChronological() {
-        Collections.sort(MyMeetingAdapter.mMeetingList, new Comparator<Meeting>() {
-            @Override
-            public int compare(Meeting o1, Meeting o2) {
-                return o2.getHour().compareTo(o1.getHour());
-            }
-        });
-        mMeetingAdapter.notifyDataSetChanged();
-    }
 
     public void openDialog(){
         MeetingDialog meetingDialog = new MeetingDialog();
