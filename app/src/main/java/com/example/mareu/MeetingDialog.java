@@ -1,13 +1,14 @@
 package com.example.mareu;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -26,20 +27,27 @@ import java.util.Calendar;
 
 import static com.example.mareu.MainActivity.mMeetingAdapter;
 
-public class MeetingDialog extends AppCompatDialogFragment {
+public class MeetingDialog extends AppCompatDialogFragment{
 
     private EditText mSubject_ET;
     private TextView mHour_TV;
     private EditText mPlace_ET;
     private EditText mParticipants_ET;
-    private ImageButton mTime_IB;
+    private ImageButton mTimePicker_IB;
+    private ImageButton mDatePicker_IB;
+    private TextView mDate_TV;
+
 
     private MeetingApiService mMeetingApiService;
 
     private TimePickerDialog mTimePickerDialog;
+    private DatePickerDialog mDatePickerDialog;
     private Calendar mCalendar;
-    private int currentHour;
-    private int currentMinute;
+    private int mCurrentHour;
+    private int mCurrentMinute;
+    private int mCurrentYear;
+    private int mCurrentMonth;
+    private int mCurrentDayOfMonth;
 
 
     @NonNull
@@ -53,12 +61,15 @@ public class MeetingDialog extends AppCompatDialogFragment {
         mMeetingApiService = DI.getMeetingApiService();
 
         mSubject_ET = view.findViewById(R.id.meeting_subject_ET);
-        mHour_TV = view.findViewById(R.id.meeting_hour_ET);
-        mTime_IB = view.findViewById(R.id.choose_time_btn);
+        mHour_TV = view.findViewById(R.id.meeting_hour_TV);
+        mTimePicker_IB = view.findViewById(R.id.choose_time_btn);
         mPlace_ET = view.findViewById(R.id.meeting_place_ET);
         mParticipants_ET = view.findViewById(R.id.meeting_participants_ET);
+        mDate_TV = view.findViewById(R.id.meeting_date_TV);
+        mDatePicker_IB = view.findViewById(R.id.choose_date_btn);
 
         setTimePickerDialog();
+        setDatePickerDialog();
 
         builder.setView(view)
                 .setTitle("Ajouter une nouvelle réunion")
@@ -110,16 +121,16 @@ public class MeetingDialog extends AppCompatDialogFragment {
     }
 
     private void setTimePickerDialog(){
-        mTime_IB.setOnClickListener(new View.OnClickListener() {
+        mTimePicker_IB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //for configuring current device time
                 mCalendar = Calendar.getInstance();
-                currentHour = mCalendar.get(Calendar.HOUR_OF_DAY);
-                currentMinute = mCalendar.get(Calendar.MINUTE);
+                mCurrentHour = mCalendar.get(Calendar.HOUR_OF_DAY);
+                mCurrentMinute = mCalendar.get(Calendar.MINUTE);
 
                 mTimePickerDialog = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
-                    //when user click on the editText, it opens the TimePickerDialog
+                    //when user click on the button, it opens the TimePickerDialog
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         if(hourOfDay < 10 && minute <10){
@@ -135,9 +146,40 @@ public class MeetingDialog extends AppCompatDialogFragment {
                             mHour_TV.setText(hourOfDay +"h" + minute);
 
                     }
-                }, currentHour, currentMinute,true);
+                }, mCurrentHour, mCurrentMinute,true);
                 mTimePickerDialog.show();
             }
         });
     }
+
+    //TODO, regler bug après entrée d'une donnée
+    private void setDatePickerDialog(){
+
+        mDatePicker_IB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCalendar = Calendar.getInstance();
+                mCurrentYear = mCalendar.get(Calendar.YEAR);
+                mCurrentMonth = mCalendar.get(Calendar.MONTH);
+                mCurrentDayOfMonth = mCalendar.get(Calendar.DAY_OF_MONTH);
+
+                if (getContext() != null){
+                mDatePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        if(dayOfMonth <10 && month < 10)
+                            mDate_TV.setText("0"+ dayOfMonth +"/" + "0"+(month + 1) + "/"+ year);
+                        else if (dayOfMonth < 10)
+                            mDate_TV.setText("0"+ dayOfMonth +"/" +(month + 1) + "/"+ year);
+                        else if (month < 10)
+                            mDate_TV.setText(dayOfMonth +"/" +"0"+(month + 1) + "/"+ year);
+                        else
+                            mDate_TV.setText(dayOfMonth +"/" +(month + 1) + "/"+ year);
+                    }
+                }, mCurrentYear, mCurrentMonth, mCurrentDayOfMonth);
+                mDatePickerDialog.show();}
+            }
+        });
+    }
+
 }

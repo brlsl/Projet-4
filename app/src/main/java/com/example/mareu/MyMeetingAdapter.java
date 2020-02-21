@@ -1,5 +1,7 @@
 package com.example.mareu;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.mareu.model.Meeting;
 import com.example.mareu.service.MeetingApiService;
 
@@ -18,6 +22,7 @@ public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.View
 
     public static List<Meeting> mMeetingList;
     private OnItemClickListener mListener;
+
 
     public interface OnItemClickListener{
         void onItemClick(int position);
@@ -44,6 +49,14 @@ public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull MyMeetingAdapter.ViewHolder holder, int position) {
+
+        // TODO le glide n'arrondit pas ce qui a été déjà chargé
+      /*  Glide
+                .with(holder.avatarColor.getContext())
+                .load()
+                .apply(RequestOptions.circleCropTransform())
+                .into(holder.avatarColor);
+*/
         holder.display(mMeetingList.get(position));
     }
 
@@ -57,6 +70,7 @@ public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.View
         private TextView mMeetingInformation;
         private TextView mMeetingParticipants;
         private ImageView mDeleteImage;
+        private ImageView avatarColor;
 
          public ViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
@@ -64,8 +78,13 @@ public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.View
             mMeetingInformation = itemView.findViewById(R.id.meeting_information_TV);
             mMeetingParticipants = itemView.findViewById(R.id.participant_TV);
             mDeleteImage = itemView.findViewById(R.id.item_delete_btn);
+            avatarColor = itemView.findViewById(R.id.color_avatar);
 
-             itemView.setOnClickListener(new View.OnClickListener() {
+            //TODO: ça charge ça avant
+            //int myColor = Color.parseColor("#3F51B5");
+            //avatarColor.setBackgroundColor(myColor);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
                  @Override
                  public void onClick(View v) {
                      if(listener != null){
@@ -77,7 +96,6 @@ public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.View
                              listener.onItemClick(position);
                          }
                      }
-
                  }
              });
 
@@ -93,7 +111,6 @@ public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.View
                             listener.onDeleteClick(position);
                         }
                     }
-
                 }
             });
         }

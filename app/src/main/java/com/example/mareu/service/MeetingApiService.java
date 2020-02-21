@@ -6,19 +6,19 @@ import java.util.List;
 
 public interface MeetingApiService {
 
-    List<Meeting> getMeetingList();
+    List<Meeting> getMeetingsList();
 
     public void addMeeting(Meeting meeting);
 
     public void deleteMeeting(Meeting meeting);
 
-    public void sortArrayListAZ();
+    public void sortMeetingsPlaceAZ();
 
-    public void sorArrayListZA();
+    public void sortMeetingsPlaceZA();
 
-    public void sortArrayListChronologicalOrder();
+    public void sortMeetingsChronologicalOrder();
 
-    public void sortArrayListAntiChronological();
+    public void sortMeetingsAntiChronological();
 
 
 

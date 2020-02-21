@@ -13,6 +13,7 @@ import org.junit.runners.JUnit4;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -24,6 +25,11 @@ import static org.junit.Assert.*;
 public class MeetingServiceTest {
 
     private MeetingApiService service;
+    private List<Meeting> testList = new ArrayList<>(Arrays.asList(
+            new Meeting("Sujet 2", "14h00", "BBB", "test@gmail.com"),
+            new Meeting("Sujet 1", "10h00", "AAA", "test@gmail.com"),
+            new Meeting("Sujet 3", "16h00", "CCC", "test@gmail.com")
+    ));
 
     @Before
     public void setUp(){
@@ -32,7 +38,7 @@ public class MeetingServiceTest {
 
     @Test
     public void getMeetingsListWithSuccess() {
-        List<Meeting> meetings = service.getMeetingList();
+        List<Meeting> meetings = service.getMeetingsList();
         List<Meeting> expectedMeeting = DummyMeetingApiServiceGenerator.MEETING_LIST;
         assertThat(meetings, IsIterableContainingInAnyOrder.containsInAnyOrder(expectedMeeting.toArray()));
     }
@@ -42,20 +48,21 @@ public class MeetingServiceTest {
     public void addMeetingWithSuccess(){
         Meeting meetingToAdd = new Meeting("SujetTest4","00h00","Place4","test@gmail.com");
         service.addMeeting(meetingToAdd);
-        assertTrue(service.getMeetingList().contains(meetingToAdd));
+        assertTrue(service.getMeetingsList().contains(meetingToAdd));
     }
 
     @Test
     public void removeMeetingWithSuccess(){
         Meeting meetingToAdd = new Meeting("SujetTest4","00h00","Place4","test@gmail.com");
         service.deleteMeeting(meetingToAdd);
-        assertFalse(service.getMeetingList().contains(meetingToAdd));
+        assertFalse(service.getMeetingsList().contains(meetingToAdd));
     }
 
 
 
     @Test
     public void sortMeetingListAZ(){
+        service.sortMeetingsPlaceAZ();
 
     }
 

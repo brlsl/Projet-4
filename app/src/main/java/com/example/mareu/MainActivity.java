@@ -10,20 +10,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 
 import com.example.mareu.di.DI;
-import com.example.mareu.service.DummyMeetingApiServiceGenerator;
-import com.example.mareu.model.Meeting;
 import com.example.mareu.service.MeetingApiService;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mMeetingApiService = DI.getMeetingApiService();
-        mMeetingApiService.getMeetingList();
+        mMeetingApiService.getMeetingsList();
 
         buildRecyclerView();
 
@@ -63,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private void buildRecyclerView() {
         mRecyclerView = findViewById(R.id.recyclerView); //ok
         // get List and adapt to RecyclerView
-        mMeetingAdapter= new MyMeetingAdapter(mMeetingApiService.getMeetingList());
+        mMeetingAdapter= new MyMeetingAdapter(mMeetingApiService.getMeetingsList());
 
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -107,17 +99,17 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if(id == R.id.item_1){
-            mMeetingApiService.sortArrayListAZ();
+            mMeetingApiService.sortMeetingsPlaceAZ();
         }
         if(id == R.id.item_2){
-            mMeetingApiService.sorArrayListZA();
+            mMeetingApiService.sortMeetingsPlaceZA();
         }
 
         if(id == R.id.item_3){
-            mMeetingApiService.sortArrayListChronologicalOrder();
+            mMeetingApiService.sortMeetingsChronologicalOrder();
         }
         if(id == R.id.item_4){
-            mMeetingApiService.sortArrayListAntiChronological();
+            mMeetingApiService.sortMeetingsAntiChronological();
         }
         mMeetingAdapter.notifyDataSetChanged();
         return super.onOptionsItemSelected(item);
