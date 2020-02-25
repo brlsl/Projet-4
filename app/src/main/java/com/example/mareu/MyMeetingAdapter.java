@@ -14,17 +14,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mareu.model.Meeting;
 
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.ViewHolder> {
 
     public static List<Meeting> mMeetingList;
     private OnItemClickListener mListener;
 
-    //actual date constant for defining avatar color
-    private static final String ACTUAL_TIME_STAMP = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+    private static String ACTUAL_TIME_STAMP;
+    private static SimpleDateFormat sdf;
 
 
     public interface OnItemClickListener{
@@ -41,6 +43,9 @@ public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.View
     //2) then  get information out into our Adapter
     public MyMeetingAdapter(List<Meeting> meetingList) {
         mMeetingList = meetingList;
+        sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
+        //actual date constant for defining avatar color
+      ACTUAL_TIME_STAMP = new SimpleDateFormat("dd/MM/yyyy",Locale.FRANCE).format(new Date());
     }
 
     @NonNull
@@ -59,6 +64,13 @@ public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.View
     @Override
     public int getItemCount() {
         return mMeetingList.size();
+    }
+
+    public static Date getDateWithoutTimeUsingFormat()
+            throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat(
+                "dd/MM/yyyy");
+        return formatter.parse(formatter.format(new Date()));
     }
 
 
@@ -107,17 +119,25 @@ public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.View
             });
         }
 
-        public void display(final Meeting meeting){
+        void display(final Meeting meeting) {
             mMeetingInformation.setText(meeting.getSubject()+" - " + meeting.getHour()+" - " + meeting.getPlace());
             mMeetingParticipants.setText(meeting.getParticipant());
 
+            try {
+                Date meetingDate = sdf.parse(meeting.getMeetingDate());
+                Date currentDate = getDateWithoutTimeUsingFormat();
             // set avatar color depending meeting date is passed, today or in future
-            if (meeting.getMeetingDate().compareTo(ACTUAL_TIME_STAMP)< 0)
-                mAvatarColor.setColorFilter(Color.parseColor("#EDD9D0")); //red
-            else if(ACTUAL_TIME_STAMP.compareTo(meeting.getMeetingDate())== 0)
-                mAvatarColor.setColorFilter(Color.parseColor("#FFE793")); //yellow
-            else if(meeting.getMeetingDate().compareTo(ACTUAL_TIME_STAMP)> 0)
-                mAvatarColor.setColorFilter(Color.parseColor("#AECEB8")); //green
+                if (meetingDate.before(currentDate))
+                    mAvatarColor.setColorFilter(Color.parseColor("#EDD9D0")); //red
+                else if(meetingDate.equals(currentDate))
+                    mAvatarColor.setColorFilter(Color.parseColor("#FFE793")); //yellow
+                else if(meetingDate.after(currentDate))
+                    mAvatarColor.setColorFilter(Color.parseColor("#AECEB8")); //green
+            } catch (ParseException e) {
+                // cas où le format de la date est erronée
+                mAvatarColor.setColorFilter(Color.parseColor("#AAAAAA"));
+            }
+
         }
 
     }
