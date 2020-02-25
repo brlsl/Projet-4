@@ -39,8 +39,6 @@ public class MainActivity extends AppCompatActivity {
 
         buildRecyclerView();
 
-
-
         // when user clicks on fab, it opens a dialog window
         fab_button = findViewById(R.id.fab_add_reunion);
         fab_button.setOnClickListener(new View.OnClickListener() {
@@ -70,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDeleteClick(int position) {
                 removeItem(position);
-                Toast.makeText(MainActivity.this, "Suppression item en test", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "La réunion a été supprimée", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -80,12 +78,6 @@ public class MainActivity extends AppCompatActivity {
         mMeetingAdapter.notifyItemRemoved(position);
     }
 
-    /*
-        public removeItem(int position){
-    
-    
-        }
-    */
     //for menu item in action bar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -120,23 +112,5 @@ public class MainActivity extends AppCompatActivity {
         MeetingDialog meetingDialog = new MeetingDialog();
         meetingDialog.show(getSupportFragmentManager(),"opens the dialog box");
     }
-/*
-    @Override
-    protected void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Subscribe
-    public void onDeleteMeeting(DeleteMeetingEvent event) {
-        mMeetingApiService.deleteMeeting(event.meeting);
-    }
-
- */
 }

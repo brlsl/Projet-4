@@ -1,9 +1,5 @@
 package com.example.mareu.model;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
 public class Meeting {
     private String place;
     private String hour;

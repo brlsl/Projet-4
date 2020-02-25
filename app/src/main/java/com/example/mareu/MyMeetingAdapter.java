@@ -23,6 +23,7 @@ public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.View
     public static List<Meeting> mMeetingList;
     private OnItemClickListener mListener;
 
+    //actual date constant for defining avatar color
     private static final String ACTUAL_TIME_STAMP = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
 
 
@@ -110,28 +111,13 @@ public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.View
             mMeetingInformation.setText(meeting.getSubject()+" - " + meeting.getHour()+" - " + meeting.getPlace());
             mMeetingParticipants.setText(meeting.getParticipant());
 
-            if
-            (meeting.getMeetingDate().compareTo(ACTUAL_TIME_STAMP)< 0)
+            // set avatar color depending meeting date is passed, today or in future
+            if (meeting.getMeetingDate().compareTo(ACTUAL_TIME_STAMP)< 0)
                 mAvatarColor.setColorFilter(Color.parseColor("#EDD9D0")); //red
             else if(ACTUAL_TIME_STAMP.compareTo(meeting.getMeetingDate())== 0)
                 mAvatarColor.setColorFilter(Color.parseColor("#FFE793")); //yellow
             else if(meeting.getMeetingDate().compareTo(ACTUAL_TIME_STAMP)> 0)
                 mAvatarColor.setColorFilter(Color.parseColor("#AECEB8")); //green
-
-
-
-
-
-            // Date date = new Date();
-            // ajouter une condition pour la couleur de l'avatar en fonction de la date
-            /*
-            if (meeting.getDate() < 0)
-                mAvatarColor.setColorFilter(Color.parseColor("#EDD9D0"));
-            if (meeting.getDate() == 0)
-                mAvatarColor.setColorFilter(Color.parseColor("#FFE793"));
-            if (meeting.getDate() > 0)
-                mAvatarColor.setColorFilter(Color.parseColor("#AECEB8"));
-            */
         }
 
     }
