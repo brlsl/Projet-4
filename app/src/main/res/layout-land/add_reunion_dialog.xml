@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dialog_add_meeting"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="20dp">
+
+    <EditText
+        android:id="@+id/meeting_subject_ET"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_sujet"
+        android:inputType="text"
+        android:singleLine="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/choose_time_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="#CE0A24"
+        android:contentDescription="button for setting time"
+        android:padding="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/meeting_subject_ET"
+        app:srcCompat="@drawable/ic_access_time_white_24dp" />
+
+
+    <TextView
+        android:id="@+id/meeting_hour_TV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#00945F5F"
+        android:contentDescription="btn for  choosing date"
+        android:hint="@string/hint_hour"
+        android:singleLine="true"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/choose_time_btn"
+        app:layout_constraintStart_toEndOf="@+id/choose_time_btn"
+        app:layout_constraintTop_toTopOf="@+id/choose_time_btn" />
+
+    <ImageButton
+        android:id="@+id/choose_date_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:background="#CE0A24"
+        android:padding="10dp"
+        android:src="@drawable/ic_date_range_white_24dp"
+        app:layout_constraintStart_toEndOf="@+id/meeting_hour_TV"
+        app:layout_constraintTop_toTopOf="@+id/choose_time_btn" />
+
+    <TextView
+        android:id="@+id/meeting_date_TV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:hint="Indiquez la date"
+        android:singleLine="true"
+        android:textSize="18sp"
+
+        app:layout_constraintBottom_toBottomOf="@+id/choose_date_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/choose_date_btn"
+        app:layout_constraintTop_toTopOf="@+id/choose_date_btn" />
+
+    <EditText
+        android:id="@+id/meeting_place_ET"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="8dp"
+        android:hint="@string/hint_place"
+        android:inputType="text"
+        android:singleLine="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/choose_date_btn" />
+
+    <EditText
+        android:id="@+id/meeting_participants_ET"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:fallbackLineSpacing="false"
+        android:hint="@string/hint_participants"
+        android:inputType="textEmailAddress"
+        android:maxLines="1"
+        android:singleLine="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/meeting_place_ET" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/hint_participants_tv"
+        android:textSize="12dp"
+        android:textColor="#0B5461"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/meeting_participants_ET" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

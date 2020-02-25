@@ -7,7 +7,7 @@
     <string name="item_3_chronological">Du plus récent au plus ancien</string>
     <string name="item_4_anti_chronological">Du plus ancien au plus récent</string>
     <string name="hint_sujet" >Indiquez le sujet</string>
-    <string name="hint_hour" >Indiquez l\'heure de début</string>
+    <string name="hint_hour" >Indiquez l\'heure</string>
     <string name="hint_place" >Indiquez le lieu</string>
     <string name="hint_participants" >Indiquez les mails des participants</string>
     <string name="hint_participants_tv" >Exemple: adresse1@mail.com; adresse2@mail.com; &#8230; </string>

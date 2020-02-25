@@ -1,6 +1,5 @@
 package com.example.mareu;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,11 +10,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.example.mareu.model.Meeting;
-import com.example.mareu.service.MeetingApiService;
 
+import com.example.mareu.model.Meeting;
+
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.ViewHolder> {
@@ -50,13 +51,6 @@ public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.View
     @Override
     public void onBindViewHolder(@NonNull MyMeetingAdapter.ViewHolder holder, int position) {
 
-        // TODO le glide n'arrondit pas ce qui a été déjà chargé
-      /*  Glide
-                .with(holder.avatarColor.getContext())
-                .load()
-                .apply(RequestOptions.circleCropTransform())
-                .into(holder.avatarColor);
-*/
         holder.display(mMeetingList.get(position));
     }
 
@@ -70,34 +64,30 @@ public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.View
         private TextView mMeetingInformation;
         private TextView mMeetingParticipants;
         private ImageView mDeleteImage;
-        private ImageView avatarColor;
+        private ImageView mAvatarColor;
 
-         public ViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
+        public ViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
 
             mMeetingInformation = itemView.findViewById(R.id.meeting_information_TV);
             mMeetingParticipants = itemView.findViewById(R.id.participant_TV);
             mDeleteImage = itemView.findViewById(R.id.item_delete_btn);
-            avatarColor = itemView.findViewById(R.id.color_avatar);
-
-            //TODO: ça charge ça avant
-            //int myColor = Color.parseColor("#3F51B5");
-            //avatarColor.setBackgroundColor(myColor);
+            mAvatarColor = itemView.findViewById(R.id.color_avatar);
 
             itemView.setOnClickListener(new View.OnClickListener() {
-                 @Override
-                 public void onClick(View v) {
-                     if(listener != null){
-                         // provide position for us
-                         int position = getAdapterPosition();
-                         //make sure the position is valid
-                         if (position != RecyclerView.NO_POSITION){
-                             //pass the position to our interface
-                             listener.onItemClick(position);
-                         }
-                     }
-                 }
-             });
+                @Override
+                public void onClick(View v) {
+                    if(listener != null){
+                        // provide position for us
+                        int position = getAdapterPosition();
+                        //make sure the position is valid
+                        if (position != RecyclerView.NO_POSITION){
+                            //pass the position to our interface
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
 
             mDeleteImage.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -116,8 +106,19 @@ public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.View
         }
 
         public void display(final Meeting meeting){
-             mMeetingInformation.setText(meeting.getSubject()+" - " + meeting.getHour()+" - " + meeting.getPlace());
-             mMeetingParticipants.setText(meeting.getParticipant());
+            mMeetingInformation.setText(meeting.getSubject()+" - " + meeting.getHour()+" - " + meeting.getPlace());
+            mMeetingParticipants.setText(meeting.getParticipant());
+
+
+           // private static final DateFormat actualDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            // Date date = new Date();
+            // ajouter une condition pour la couleur de l'avatar en fonction de la date
+            if (meeting.getDate() < 0)
+                mAvatarColor.setColorFilter(Color.parseColor("#EDD9D0"));
+            if (meeting.getDate() == 0)
+                mAvatarColor.setColorFilter(Color.parseColor("#FFE793"));
+            if (meeting.getDate() > 0)
+                mAvatarColor.setColorFilter(Color.parseColor("#AECEB8"));
         }
 
     }
