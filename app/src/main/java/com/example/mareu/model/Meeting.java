@@ -1,5 +1,7 @@
 package com.example.mareu.model;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class Meeting {
@@ -7,14 +9,15 @@ public class Meeting {
     private String hour;
     private String subject;
     private String participant;
-    private int date;
+    private String meetingDate;
 
-    public Meeting(String subject, String hour, String place, String participant, int date) {
+
+    public Meeting(String subject, String hour, String place, String participant, String meetingDate) {
         this.subject = subject;
         this.hour = hour;
         this.place = place;
         this.participant = participant;
-        this.date = date;
+        this.meetingDate= meetingDate;
     }
 
     public String getHour() {
@@ -49,12 +52,12 @@ public class Meeting {
         this.participant = participant;
     }
 
-    public int getDate() {
-        return date;
+    public String getMeetingDate() {
+        return meetingDate;
     }
 
-    public void setDate(int date) {
-        this.date = date;
+    public void setMeetingDate(String meetingDate) {
+        this.meetingDate = meetingDate;
     }
 }
 

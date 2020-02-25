@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mareu.model.Meeting;
 
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -23,6 +22,8 @@ public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.View
 
     public static List<Meeting> mMeetingList;
     private OnItemClickListener mListener;
+
+    private static final String ACTUAL_TIME_STAMP = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
 
 
     public interface OnItemClickListener{
@@ -109,16 +110,28 @@ public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.View
             mMeetingInformation.setText(meeting.getSubject()+" - " + meeting.getHour()+" - " + meeting.getPlace());
             mMeetingParticipants.setText(meeting.getParticipant());
 
+            if
+            (meeting.getMeetingDate().compareTo(ACTUAL_TIME_STAMP)< 0)
+                mAvatarColor.setColorFilter(Color.parseColor("#EDD9D0")); //red
+            else if(ACTUAL_TIME_STAMP.compareTo(meeting.getMeetingDate())== 0)
+                mAvatarColor.setColorFilter(Color.parseColor("#FFE793")); //yellow
+            else if(meeting.getMeetingDate().compareTo(ACTUAL_TIME_STAMP)> 0)
+                mAvatarColor.setColorFilter(Color.parseColor("#AECEB8")); //green
 
-           // private static final DateFormat actualDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
+
+
+
             // Date date = new Date();
             // ajouter une condition pour la couleur de l'avatar en fonction de la date
+            /*
             if (meeting.getDate() < 0)
                 mAvatarColor.setColorFilter(Color.parseColor("#EDD9D0"));
             if (meeting.getDate() == 0)
                 mAvatarColor.setColorFilter(Color.parseColor("#FFE793"));
             if (meeting.getDate() > 0)
                 mAvatarColor.setColorFilter(Color.parseColor("#AECEB8"));
+            */
         }
 
     }

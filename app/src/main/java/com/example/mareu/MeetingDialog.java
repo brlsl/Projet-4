@@ -100,14 +100,14 @@ public class MeetingDialog extends AppCompatDialogFragment{
                         String hour = mHour_TV.getText().toString();
                         String place = mPlace_ET.getText().toString();
                         String participant = mParticipants_ET.getText().toString();
-                        int date = mDate_TV.getId();
+                        String meetingDate = mDate_TV.getText().toString();
 
                         // if all form are filled,
                         if (!(mSubject_ET.getText().toString().isEmpty() || mHour_TV.getText().toString().isEmpty()
                                 || mPlace_ET.getText().toString().isEmpty()
                                 || mParticipants_ET.getText().toString().isEmpty() || mDate_TV.getText().toString().isEmpty() )){
 
-                            applyTextsToList(subject, hour, place, participant, date);
+                            applyTextsToList(subject, hour, place, participant, meetingDate);
                             Toast.makeText(getContext(), "La réunion a été ajoutée", Toast.LENGTH_SHORT).show();
 
                             dialog.dismiss();
@@ -122,8 +122,8 @@ public class MeetingDialog extends AppCompatDialogFragment{
         dialog.setCanceledOnTouchOutside(false);
     }
 
-    private void applyTextsToList(String subject, String hour, String place, String participant, int date) {
-        Meeting new_meeting = new Meeting(place, hour, subject, participant, date);
+    private void applyTextsToList(String subject, String hour, String place, String participant, String meetingDate) {
+        Meeting new_meeting = new Meeting(place, hour, subject, participant, meetingDate);
         mMeetingApiService.addMeeting(new_meeting);
         mMeetingAdapter.notifyDataSetChanged();
     }

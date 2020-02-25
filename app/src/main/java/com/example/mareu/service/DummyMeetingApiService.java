@@ -44,7 +44,7 @@ public class DummyMeetingApiService implements MeetingApiService{
 
     @Override
     public void sortMeetingsPlaceZA() {
-        Collections.sort(MyMeetingAdapter.mMeetingList, new Comparator<Meeting>() {
+        Collections.sort(mMeetingList, new Comparator<Meeting>() {
             @Override
             public int compare(Meeting o1, Meeting o2) {
                 return o2.getPlace().compareTo(o1.getPlace());
@@ -54,7 +54,7 @@ public class DummyMeetingApiService implements MeetingApiService{
 
     @Override
     public void sortMeetingsChronologicalOrder() {
-        Collections.sort(MyMeetingAdapter.mMeetingList, new Comparator<Meeting>() {
+        Collections.sort(mMeetingList, new Comparator<Meeting>() {
             @Override
             public int compare(Meeting o1, Meeting o2) {
                 return o1.getHour().compareTo(o2.getHour());
@@ -64,7 +64,7 @@ public class DummyMeetingApiService implements MeetingApiService{
 
     @Override
     public void sortMeetingsAntiChronological() {
-        Collections.sort(MyMeetingAdapter.mMeetingList, new Comparator<Meeting>() {
+        Collections.sort(mMeetingList, new Comparator<Meeting>() {
             @Override
             public int compare(Meeting o1, Meeting o2) {
                 return o2.getHour().compareTo(o1.getHour());
