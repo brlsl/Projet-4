@@ -45,7 +45,7 @@ public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.View
         mMeetingList = meetingList;
         sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
         //actual date constant for defining avatar color
-      ACTUAL_TIME_STAMP = new SimpleDateFormat("dd/MM/yyyy",Locale.FRANCE).format(new Date());
+        ACTUAL_TIME_STAMP = new SimpleDateFormat("dd/MM/yyyy",Locale.FRANCE).format(new Date());
     }
 
     @NonNull
@@ -57,7 +57,6 @@ public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull MyMeetingAdapter.ViewHolder holder, int position) {
-
         holder.display(mMeetingList.get(position));
     }
 
@@ -68,8 +67,7 @@ public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.View
 
     public static Date getDateWithoutTimeUsingFormat()
             throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat(
-                "dd/MM/yyyy");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
         return formatter.parse(formatter.format(new Date()));
     }
 
@@ -123,10 +121,11 @@ public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.View
             mMeetingInformation.setText(meeting.getSubject()+" - " + meeting.getHour()+" - " + meeting.getPlace());
             mMeetingParticipants.setText(meeting.getParticipant());
 
+            // set avatar color depending meeting date is passed, today or in future
             try {
                 Date meetingDate = sdf.parse(meeting.getMeetingDate());
                 Date currentDate = getDateWithoutTimeUsingFormat();
-            // set avatar color depending meeting date is passed, today or in future
+
                 if (meetingDate.before(currentDate))
                     mAvatarColor.setColorFilter(Color.parseColor("#EDD9D0")); //red
                 else if(meetingDate.equals(currentDate))

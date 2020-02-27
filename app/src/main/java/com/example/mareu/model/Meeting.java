@@ -1,11 +1,17 @@
 package com.example.mareu.model;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class Meeting {
     private String place;
     private String hour;
     private String subject;
     private String participant;
     private String meetingDate;
+    private String fusion;
 
 
     public Meeting(String subject, String hour, String place, String participant, String meetingDate) {
@@ -14,6 +20,7 @@ public class Meeting {
         this.place = place;
         this.participant = participant;
         this.meetingDate= meetingDate;
+        this.fusion = meetingDate+" "+hour;
     }
 
     public String getHour() {
@@ -55,5 +62,14 @@ public class Meeting {
     public void setMeetingDate(String meetingDate) {
         this.meetingDate = meetingDate;
     }
+
+    public String getFusion() {
+        return fusion;
+    }
+
+    public void setFusion(String fusion) {
+        this.fusion = fusion;
+    }
+
 }
 

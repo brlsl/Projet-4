@@ -142,13 +142,13 @@ public class MeetingDialog extends AppCompatDialogFragment{
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         if(hourOfDay < 10 && minute <10)
-                            mHour_TV.setText("0" + hourOfDay +"h" + "0" + minute );
+                            mHour_TV.setText("0" + hourOfDay +":" + "0" + minute );
                         else if (minute < 10)
-                            mHour_TV.setText(hourOfDay +"h" +"0"+ minute );
+                            mHour_TV.setText(hourOfDay +":" +"0"+ minute );
                         else if(hourOfDay < 10)
-                            mHour_TV.setText("0" + hourOfDay +"h" + minute );
+                            mHour_TV.setText("0" + hourOfDay +":" + minute );
                         else
-                            mHour_TV.setText(hourOfDay +"h" + minute);
+                            mHour_TV.setText(hourOfDay +":" + minute);
                     }
                 }, mCurrentHour, mCurrentMinute,true);
                 mTimePickerDialog.show();
