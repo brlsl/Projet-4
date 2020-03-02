@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
         mMeetingAdapter.setOnItemClickListener(new MyMeetingAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-
                 Toast.makeText(MainActivity.this, "La date de la réunion est le "+dateAndTime(position), Toast.LENGTH_SHORT).show();
             }
 

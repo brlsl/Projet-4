@@ -1,6 +1,5 @@
 package com.example.mareu.service;
 
-import com.example.mareu.MyMeetingAdapter;
 import com.example.mareu.model.Meeting;
 
 import java.text.ParseException;
@@ -34,8 +33,7 @@ public class DummyMeetingApiService implements MeetingApiService{
        Collections.sort(mMeetingList, new Comparator<Meeting>() {
             @Override
             public int compare(Meeting o1, Meeting o2) {
-                // TODO: forcer la première lettre à etre en majuscule
-                return o1.getPlace().compareTo(o2.getPlace());
+                return o1.getPlace().toUpperCase().compareTo(o2.getPlace().toUpperCase());
             }
         });
 
@@ -46,7 +44,7 @@ public class DummyMeetingApiService implements MeetingApiService{
         Collections.sort(mMeetingList, new Comparator<Meeting>() {
             @Override
             public int compare(Meeting o1, Meeting o2) {
-                return o2.getPlace().compareTo(o1.getPlace());
+                return o2.getPlace().toUpperCase().compareTo(o1.getPlace().toUpperCase());
             }
         });
     }
@@ -57,7 +55,6 @@ public class DummyMeetingApiService implements MeetingApiService{
             @Override
             public int compare(Meeting o1, Meeting o2) {
                 sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.FRANCE);
-
                 Date conversion1 = null;
                 try {
                     conversion1 = sdf.parse(o1.getFusion());
@@ -70,7 +67,6 @@ public class DummyMeetingApiService implements MeetingApiService{
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-
                 return conversion1.compareTo(conversion2);
             }
         });
@@ -95,7 +91,6 @@ public class DummyMeetingApiService implements MeetingApiService{
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-
                 return conversion2.compareTo(conversion1);
             }
         });
