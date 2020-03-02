@@ -26,8 +26,9 @@ import static org.junit.Assert.*;
 public class MeetingServiceTest {
 
     private MeetingApiService service;
-    private final Meeting meeting1 = new Meeting("Sujet 1", "14h00", "AAA", "test@gmail.com","20/01/2000");
-    private final Meeting meeting2 = new Meeting("Sujet 2", "14h00", "BBB", "test@gmail.com","20/01/2030");
+    private final Meeting meeting1 = new Meeting("Sujet 1", "14h00", "BBB", "test@gmail.com","20/01/2000");
+    private final Meeting meeting2 = new Meeting("Sujet 2", "14h00", "AAA", "test@gmail.com","01/01/2022");
+    private final Meeting meeting3 = new Meeting("Sujet 3", "14h00", "CCC", "test@gmail.com","31/04/2030");
 
 
     @Before
@@ -42,7 +43,6 @@ public class MeetingServiceTest {
         assertThat(meetings, IsIterableContainingInAnyOrder.containsInAnyOrder(expectedMeeting.toArray()));
     }
 
-    //TODO: modifier la méthode addMeeting() pour que le test passe
     @Test
     public void addMeetingWithSuccess(){
         Meeting meetingToAdd = new Meeting("SujetTest4","00h00","Place4","test@gmail.com","20/10/2020");
@@ -63,9 +63,12 @@ public class MeetingServiceTest {
         service.getMeetingsList().clear();
         service.addMeeting(meeting1);
         service.addMeeting(meeting2);
+        service.addMeeting(meeting3);
         //test
         service.sortMeetingsPlaceAZ();
-        assertTrue((meeting1.getPlace().compareTo(meeting2.getPlace()))< 0);
+        assertEquals((service.getMeetingsList().get(0).getPlace()), (meeting2.getPlace()));
+        assertEquals((service.getMeetingsList().get(1).getPlace()), (meeting1.getPlace()));
+        assertEquals((service.getMeetingsList().get(2).getPlace()), (meeting3.getPlace()));
 
     }
 
@@ -75,9 +78,12 @@ public class MeetingServiceTest {
         service.getMeetingsList().clear();
         service.addMeeting(meeting1);
         service.addMeeting(meeting2);
+        service.addMeeting(meeting3);
         //test
         service.sortMeetingsPlaceZA();
-        assertTrue((meeting1.getPlace().compareTo(meeting2.getPlace()))> 0);
+        assertEquals((service.getMeetingsList().get(0).getPlace()), (meeting3.getPlace()));
+        assertEquals((service.getMeetingsList().get(1).getPlace()), (meeting1.getPlace()));
+        assertEquals((service.getMeetingsList().get(2).getPlace()), (meeting2.getPlace()));
 
     }
 
