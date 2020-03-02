@@ -22,10 +22,9 @@ import java.util.Locale;
 
 public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.ViewHolder> {
 
-    public static List<Meeting> mMeetingList;
+    static List<Meeting> mMeetingList;
     private OnItemClickListener mListener;
 
-    private static String ACTUAL_TIME_STAMP;
     private static SimpleDateFormat sdf;
 
 
@@ -34,18 +33,16 @@ public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.View
         void onDeleteClick(int position);
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener){
+    void setOnItemClickListener(OnItemClickListener listener){
         mListener = listener;
     }
 
     //get data out from List to Adapter with constructor
     //1) create Adapter, pass a list of Meeting to it and pass this list to our mMeetingList variable
     //2) then  get information out into our Adapter
-    public MyMeetingAdapter(List<Meeting> meetingList) {
+    MyMeetingAdapter(List<Meeting> meetingList) {
         mMeetingList = meetingList;
         sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
-        //actual date constant for defining avatar color
-        ACTUAL_TIME_STAMP = new SimpleDateFormat("dd/MM/yyyy",Locale.FRANCE).format(new Date());
     }
 
     @NonNull
@@ -65,7 +62,7 @@ public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.View
         return mMeetingList.size();
     }
 
-    public static Date getDateWithoutTimeUsingFormat()
+    private static Date getDateWithoutTimeUsingFormat()
             throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
         return formatter.parse(formatter.format(new Date()));

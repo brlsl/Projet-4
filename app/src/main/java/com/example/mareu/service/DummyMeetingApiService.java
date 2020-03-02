@@ -14,10 +14,8 @@ import java.util.Locale;
 public class DummyMeetingApiService implements MeetingApiService{
 
     private List<Meeting> mMeetingList = DummyMeetingApiServiceGenerator.generateMeetingList();
-    private MyMeetingAdapter mAdapter = new MyMeetingAdapter(mMeetingList);
-    private Meeting mMeeting;
 
-    private SimpleDateFormat sdf;
+    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.FRANCE);
 
     @Override
     public List<Meeting> getMeetingsList() {
@@ -36,6 +34,7 @@ public class DummyMeetingApiService implements MeetingApiService{
        Collections.sort(mMeetingList, new Comparator<Meeting>() {
             @Override
             public int compare(Meeting o1, Meeting o2) {
+                // TODO: forcer la première lettre à etre en majuscule
                 return o1.getPlace().compareTo(o2.getPlace());
             }
         });
@@ -51,31 +50,13 @@ public class DummyMeetingApiService implements MeetingApiService{
             }
         });
     }
-/*
-    public Date conversionTime(String fusion){
-        fusion = meetingDate +" "+ hour;
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.FRANCE);
-        Date conversion = null;
-        try {
-            conversion = sdf.parse(fusion);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return conversion;
-    }
-  */
     @Override
     public void sortMeetingsChronologicalOrder(){
         Collections.sort(mMeetingList, new Comparator<Meeting>() {
             @Override
             public int compare(Meeting o1, Meeting o2) {
-
                 sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.FRANCE);
-                //String dateTime1 = o1.getMeetingDate()+" "+o1.getHour();
-                //String dateTime2 = o2.getMeetingDate()+" "+o2.getHour();
-
 
                 Date conversion1 = null;
                 try {
@@ -90,10 +71,7 @@ public class DummyMeetingApiService implements MeetingApiService{
                     e.printStackTrace();
                 }
 
-                if(conversion1.after(conversion2))
-                    return 1;
-                else
-                    return -1;
+                return conversion1.compareTo(conversion2);
             }
         });
     }
@@ -104,18 +82,16 @@ public class DummyMeetingApiService implements MeetingApiService{
             @Override
             public int compare(Meeting o1, Meeting o2) {
                 sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.FRANCE);
-                String dateTime1 = o1.getMeetingDate()+" "+o1.getHour();
-                String dateTime2 = o2.getMeetingDate()+" "+o2.getHour();
 
                 Date conversion1 = null;
                 try {
-                    conversion1 = sdf.parse(dateTime1);
+                    conversion1 = sdf.parse(o1.getFusion());
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
                 Date conversion2 = null;
                 try {
-                    conversion2 = sdf.parse(dateTime2);
+                    conversion2 = sdf.parse(o2.getFusion());
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -124,6 +100,5 @@ public class DummyMeetingApiService implements MeetingApiService{
             }
         });
     }
-
 
 }

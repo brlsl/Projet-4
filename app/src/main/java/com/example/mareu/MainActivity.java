@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 
 import com.example.mareu.di.DI;
+import com.example.mareu.model.Meeting;
 import com.example.mareu.service.MeetingApiService;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -26,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
 
     //for data
-
     private MeetingApiService mMeetingApiService;
 
     @Override
@@ -62,7 +62,8 @@ public class MainActivity extends AppCompatActivity {
         mMeetingAdapter.setOnItemClickListener(new MyMeetingAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Toast.makeText(MainActivity.this, "Test click sur itemView", Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(MainActivity.this, "La date de la réunion est le "+dateAndTime(position), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -76,6 +77,11 @@ public class MainActivity extends AppCompatActivity {
     public void removeItem(int position){
         MyMeetingAdapter.mMeetingList.remove(position);
         mMeetingAdapter.notifyItemRemoved(position);
+    }
+
+    public String dateAndTime(int position){
+        Meeting meeting = MyMeetingAdapter.mMeetingList.get(position);
+        return meeting.getMeetingDate() +" à "+ meeting.getHour();
     }
 
     //for menu item in action bar
