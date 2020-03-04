@@ -26,9 +26,9 @@ import static org.junit.Assert.*;
 public class MeetingServiceTest {
 
     private MeetingApiService service;
-    private final Meeting meeting1 = new Meeting("Sujet 1", "14h00", "BBB", "test@gmail.com","20/01/2000");
-    private final Meeting meeting2 = new Meeting("Sujet 2", "14h00", "AAA", "test@gmail.com","01/01/2022");
-    private final Meeting meeting3 = new Meeting("Sujet 3", "14h00", "CCC", "test@gmail.com","31/04/2030");
+    private final Meeting meeting1 = new Meeting("Sujet 1", "13:00", "BBB", "test@gmail.com","18/11/2020");
+    private final Meeting meeting2 = new Meeting("Sujet 2", "11:00", "AAA", "test@gmail.com","20/02/2022");
+    private final Meeting meeting3 = new Meeting("Sujet 3", "12:00", "CCC", "test@gmail.com","18/11/2020");
 
 
     @Before
@@ -45,14 +45,14 @@ public class MeetingServiceTest {
 
     @Test
     public void addMeetingWithSuccess(){
-        Meeting meetingToAdd = new Meeting("SujetTest4","00h00","Place4","test@gmail.com","20/10/2020");
+        Meeting meetingToAdd = new Meeting("Sujet Test4","00:00","Place4","test@gmail.com","20/10/2020");
         service.addMeeting(meetingToAdd);
         assertTrue(service.getMeetingsList().contains(meetingToAdd));
     }
 
     @Test
     public void removeMeetingWithSuccess(){
-        Meeting meetingToAdd = new Meeting("SujetTest4","00h00","Place4","test@gmail.com","20/10/2020");
+        Meeting meetingToAdd = new Meeting("Sujet Test4","00:00","Place4","test@gmail.com","20/10/2020");
         service.deleteMeeting(meetingToAdd);
         assertFalse(service.getMeetingsList().contains(meetingToAdd));
     }
@@ -66,9 +66,9 @@ public class MeetingServiceTest {
         service.addMeeting(meeting3);
         //test
         service.sortMeetingsPlaceAZ();
-        assertEquals((service.getMeetingsList().get(0).getPlace()), (meeting2.getPlace()));
-        assertEquals((service.getMeetingsList().get(1).getPlace()), (meeting1.getPlace()));
-        assertEquals((service.getMeetingsList().get(2).getPlace()), (meeting3.getPlace()));
+        assertEquals(service.getMeetingsList().get(0).getPlace(), meeting2.getPlace());
+        assertEquals(service.getMeetingsList().get(1).getPlace(), meeting1.getPlace());
+        assertEquals(service.getMeetingsList().get(2).getPlace(), meeting3.getPlace());
 
     }
 
@@ -81,19 +81,35 @@ public class MeetingServiceTest {
         service.addMeeting(meeting3);
         //test
         service.sortMeetingsPlaceZA();
-        assertEquals((service.getMeetingsList().get(0).getPlace()), (meeting3.getPlace()));
-        assertEquals((service.getMeetingsList().get(1).getPlace()), (meeting1.getPlace()));
-        assertEquals((service.getMeetingsList().get(2).getPlace()), (meeting2.getPlace()));
+        assertEquals(service.getMeetingsList().get(0).getPlace(), meeting3.getPlace());
+        assertEquals(service.getMeetingsList().get(1).getPlace(), meeting1.getPlace());
+        assertEquals(service.getMeetingsList().get(2).getPlace(), meeting2.getPlace());
 
     }
 
     @Test
     public void sortMeetingChronological(){
+        service.getMeetingsList().clear();
+        service.addMeeting(meeting1);
+        service.addMeeting(meeting2);
+        service.addMeeting(meeting3);
+        service.sortMeetingsChronologicalOrder();
+        assertEquals(service.getMeetingsList().get(0).getFusion(), meeting3.getFusion());
+        assertEquals(service.getMeetingsList().get(1).getFusion(), meeting1.getFusion());
+        assertEquals(service.getMeetingsList().get(2).getFusion(), meeting2.getFusion());
 
     }
 
     @Test
     public void sortMeetingAntiChronological(){
+        service.getMeetingsList().clear();
+        service.addMeeting(meeting1);
+        service.addMeeting(meeting2);
+        service.addMeeting(meeting3);
+        service.sortMeetingsAntiChronological();
+        assertEquals(service.getMeetingsList().get(0).getFusion(), meeting2.getFusion());
+        assertEquals(service.getMeetingsList().get(1).getFusion(), meeting1.getFusion());
+        assertEquals(service.getMeetingsList().get(2).getFusion(), meeting3.getFusion());
 
     }
 }
