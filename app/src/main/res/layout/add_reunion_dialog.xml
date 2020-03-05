@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/choose_time_btn"
+        android:id="@+id/choose_hour_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -42,10 +42,10 @@
         android:hint="@string/hint_hour"
         android:singleLine="true"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/choose_time_btn"
+        app:layout_constraintBottom_toBottomOf="@+id/choose_hour_btn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/choose_time_btn"
-        app:layout_constraintTop_toTopOf="@+id/choose_time_btn" />
+        app:layout_constraintStart_toEndOf="@+id/choose_hour_btn"
+        app:layout_constraintTop_toTopOf="@+id/choose_hour_btn" />
 
     <ImageButton
         android:id="@+id/choose_date_btn"
@@ -56,7 +56,7 @@
         android:padding="10dp"
         android:src="@drawable/ic_date_range_white_24dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/choose_time_btn" />
+        app:layout_constraintTop_toBottomOf="@+id/choose_hour_btn" />
 
     <TextView
         android:id="@+id/meeting_date_TV"

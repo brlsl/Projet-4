@@ -15,8 +15,7 @@ public abstract class DummyMeetingApiServiceGenerator {
     public static List <Meeting> MEETING_LIST = Arrays.asList(
             new Meeting("Réunion A","14:00","Peach","test@gmail.com, test2@gmail.com, test3@gmail.com","01/01/2019"),
             new Meeting("Réunion B","16:00","Mario","test@gmail.com, test2@gmail.com, test3@gmail.com","25/02/2020"),
-            new Meeting("Réunion C","19:50","Luigi","test@gmail.com, test2@gmail.com, test3@gmail.com","30/12/2021"),
-            new Meeting("Réunion C","10:00","Link","test@gmail.com, test2@gmail.com, test3@gmail.com","01/03/2022")
+            new Meeting("Réunion C","19:50","Luigi","test@gmail.com, test2@gmail.com, test3@gmail.com","30/12/2021")
     );
 
 }

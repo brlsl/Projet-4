@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void buildRecyclerView() {
-        mRecyclerView = findViewById(R.id.recyclerView); //ok
+        mRecyclerView = findViewById(R.id.recyclerViewList); //ok
         // get List and adapt to RecyclerView
         mMeetingAdapter= new MyMeetingAdapter(mMeetingApiService.getMeetingsList());
 

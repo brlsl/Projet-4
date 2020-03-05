@@ -67,7 +67,7 @@ public class MeetingDialog extends AppCompatDialogFragment{
         // referencing Dialog fields
         mSubject_ET = view.findViewById(R.id.meeting_subject_ET);
         mHour_TV = view.findViewById(R.id.meeting_hour_TV);
-        mTimePicker_IB = view.findViewById(R.id.choose_time_btn);
+        mTimePicker_IB = view.findViewById(R.id.choose_hour_btn);
         mPlace_ET = view.findViewById(R.id.meeting_place_ET);
         mParticipants_ET = view.findViewById(R.id.meeting_participants_ET);
         mDate_TV = view.findViewById(R.id.meeting_date_TV);
@@ -156,7 +156,6 @@ public class MeetingDialog extends AppCompatDialogFragment{
         });
     }
 
-    //TODO, regler bug après entrée d'une donnée
     private void setDatePickerDialog(){
         mDatePicker_IB.setOnClickListener(new View.OnClickListener() {
             @Override

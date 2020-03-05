@@ -10,17 +10,17 @@ public interface MeetingApiService {
 
     List<Meeting> getMeetingsList();
 
-    public void addMeeting(Meeting meeting);
+    void addMeeting(Meeting meeting);
 
-    public void deleteMeeting(Meeting meeting);
+    void deleteMeeting(Meeting meeting);
 
-    public void sortMeetingsPlaceAZ();
+    void sortMeetingsPlaceAZ();
 
-    public void sortMeetingsPlaceZA();
+    void sortMeetingsPlaceZA();
 
-    public void sortMeetingsChronologicalOrder();
+    void sortMeetingsChronologicalOrder();
 
-    public void sortMeetingsAntiChronological();
+    void sortMeetingsAntiChronological();
 
 
 
