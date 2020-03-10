@@ -9,8 +9,6 @@ import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
-import com.example.mareu.model.Meeting;
-
 import com.example.mareu.utils.DeleteMeetingAction;
 import com.example.mareu.utils.RecyclerViewMatcher;
 
@@ -18,8 +16,6 @@ import org.hamcrest.Matchers;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.util.List;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -40,9 +36,6 @@ import static com.example.mareu.utils.RecyclerViewItemCountAssertion.withItemCou
  */
 @RunWith(AndroidJUnit4.class)
 public class MeetingInstrumentedTest {
-
-    //number of meetings at when apps is launched
-    private static int ITEM_COUNT = 3;
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule =
@@ -106,20 +99,7 @@ public class MeetingInstrumentedTest {
     }
 
     @Test
-    public void orderingByDateShouldWorks(){
-        onView(withId(R.id.item_menu))
-                .perform(click());
-        onView(withText("Du plus récent au plus ancien"))
-                .perform(click());
-        onView(new RecyclerViewMatcher(R.id.recyclerViewList)
-                .atPositionOnView(0, R.id.meeting_information_TV))
-                .check(matches(withText("Réunion B - 16:00 - Mario"))); //date 31/03/2021
-        onView(new RecyclerViewMatcher(R.id.recyclerViewList)
-                .atPositionOnView(1, R.id.meeting_information_TV))
-                .check(matches(withText("Réunion C - 19:00 - Luigi"))); //date 18/11/2020
-        onView(new RecyclerViewMatcher(R.id.recyclerViewList)
-                .atPositionOnView(2, R.id.meeting_information_TV))
-                .check(matches(withText("Réunion A - 14:00 - Peach"))); // date 01/01/2019
+    public void chronologicalOrderShouldWorks(){
         onView(withId(R.id.item_menu))
                 .perform(click());
         onView(withText("Du plus ancien au plus récent"))
@@ -136,7 +116,24 @@ public class MeetingInstrumentedTest {
     }
 
     @Test
-    public void orderingByPlaceShouldWorks(){
+    public void antiChronologicalOrderShouldWorks(){
+        onView(withId(R.id.item_menu))
+                .perform(click());
+        onView(withText("Du plus récent au plus ancien"))
+                .perform(click());
+        onView(new RecyclerViewMatcher(R.id.recyclerViewList)
+                .atPositionOnView(0, R.id.meeting_information_TV))
+                .check(matches(withText("Réunion B - 16:00 - Mario"))); //date 31/03/2021
+        onView(new RecyclerViewMatcher(R.id.recyclerViewList)
+                .atPositionOnView(1, R.id.meeting_information_TV))
+                .check(matches(withText("Réunion C - 19:00 - Luigi"))); //date 18/11/2020
+        onView(new RecyclerViewMatcher(R.id.recyclerViewList)
+                .atPositionOnView(2, R.id.meeting_information_TV))
+                .check(matches(withText("Réunion A - 14:00 - Peach"))); // date 01/01/2019
+    }
+
+    @Test
+    public void alphabeticalOrderPlaceShouldWorks(){
         onView(withId(R.id.item_menu))
                 .perform(click());
         onView(withText("Lieu de réunion: A -> Z"))
@@ -150,6 +147,10 @@ public class MeetingInstrumentedTest {
         onView(new RecyclerViewMatcher(R.id.recyclerViewList)
                 .atPositionOnView(2, R.id.meeting_information_TV))
                 .check(matches(withText("Réunion A - 14:00 - Peach")));
+    }
+
+    @Test
+    public void antiAlphabeticalOrderPlaceShouldWorks(){
         onView(withId(R.id.item_menu))
                 .perform(click());
         onView(withText("Lieu de réunion: Z -> A"))
@@ -163,17 +164,11 @@ public class MeetingInstrumentedTest {
         onView(new RecyclerViewMatcher(R.id.recyclerViewList)
                 .atPositionOnView(2, R.id.meeting_information_TV))
                 .check(matches(withText("Réunion C - 19:00 - Luigi")));
-
-
     }
-/*
-    @Test
-    public void shouldRemoveMeeting() {
 
-    }
-*/
     @Test
     public void shouldRemoveAndAddMeeting(){
+        int ITEM_COUNT = 3;
         onView(withId(R.id.recyclerViewList))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, new DeleteMeetingAction()));
         onView(withId(R.id.recyclerViewList)).check(withItemCount(ITEM_COUNT - 1));
@@ -195,5 +190,4 @@ public class MeetingInstrumentedTest {
                 .perform(click());
         onView(withId(R.id.recyclerViewList)).check(withItemCount(ITEM_COUNT));
     }
-
 }

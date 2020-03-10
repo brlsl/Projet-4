@@ -26,7 +26,6 @@ public class MeetingServiceTest {
     private final Meeting meeting2 = new Meeting("Sujet 2", "11:00", "AAA", "test@gmail.com","20/02/2022");
     private final Meeting meeting3 = new Meeting("Sujet 3", "12:00", "CCC", "test@gmail.com","18/11/2020");
 
-
     @Before
     public void setUp(){
         service = DI.getNewInstanceApiService();
@@ -55,32 +54,26 @@ public class MeetingServiceTest {
 
     @Test
     public void sortMeetingListAZ(){
-        // vide la liste
         service.getMeetingsList().clear();
         service.addMeeting(meeting1);
         service.addMeeting(meeting2);
         service.addMeeting(meeting3);
-        //test
         service.sortMeetingsPlaceAZ();
         assertEquals(service.getMeetingsList().get(0).getPlace(), meeting2.getPlace());
         assertEquals(service.getMeetingsList().get(1).getPlace(), meeting1.getPlace());
         assertEquals(service.getMeetingsList().get(2).getPlace(), meeting3.getPlace());
-
     }
 
     @Test
     public void sortMeetingZA(){
-        // vide la liste
         service.getMeetingsList().clear();
         service.addMeeting(meeting1);
         service.addMeeting(meeting2);
         service.addMeeting(meeting3);
-        //test
         service.sortMeetingsPlaceZA();
         assertEquals(service.getMeetingsList().get(0).getPlace(), meeting3.getPlace());
         assertEquals(service.getMeetingsList().get(1).getPlace(), meeting1.getPlace());
         assertEquals(service.getMeetingsList().get(2).getPlace(), meeting2.getPlace());
-
     }
 
     @Test
@@ -106,6 +99,5 @@ public class MeetingServiceTest {
         assertEquals(service.getMeetingsList().get(0).getFusion(), meeting2.getFusion());
         assertEquals(service.getMeetingsList().get(1).getFusion(), meeting1.getFusion());
         assertEquals(service.getMeetingsList().get(2).getFusion(), meeting3.getFusion());
-
     }
 }

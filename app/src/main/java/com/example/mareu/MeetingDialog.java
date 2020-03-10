@@ -29,6 +29,12 @@ import static com.example.mareu.MainActivity.mMeetingAdapter;
 
 public class MeetingDialog extends AppCompatDialogFragment{
 
+    //build dialog
+    private View view;
+    private AlertDialog.Builder builder;
+    private Dialog dialog;
+
+    //fields of new meeting creation
     private EditText mSubject_ET;
     private TextView mHour_TV;
     private EditText mPlace_ET;
@@ -37,14 +43,9 @@ public class MeetingDialog extends AppCompatDialogFragment{
     private ImageButton mDatePicker_IB;
     private TextView mDate_TV;
 
-
     private MeetingApiService mMeetingApiService;
 
-    //build dialog
-    private View view;
-    private AlertDialog.Builder builder;
-    private Dialog dialog;
-
+    //for time picker and date picker
     private TimePickerDialog mTimePickerDialog;
     private DatePickerDialog mDatePickerDialog;
     private Calendar mCalendar;
@@ -54,7 +55,6 @@ public class MeetingDialog extends AppCompatDialogFragment{
     private int mCurrentMonth;
     private int mCurrentDayOfMonth;
 
-
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -62,6 +62,7 @@ public class MeetingDialog extends AppCompatDialogFragment{
         LayoutInflater inflater = getActivity().getLayoutInflater();
         view = inflater.inflate(R.layout.add_reunion_dialog,null);
 
+        // for service
         mMeetingApiService = DI.getMeetingApiService();
 
         // referencing Dialog fields
@@ -73,14 +74,12 @@ public class MeetingDialog extends AppCompatDialogFragment{
         mDate_TV = view.findViewById(R.id.meeting_date_TV);
         mDatePicker_IB = view.findViewById(R.id.choose_date_btn);
 
-
         setTimePickerDialog();
         setDatePickerDialog();
         buildDialog();
 
         // show alert dialog
         return dialog;
-
     }
 
     private void buildDialog() {
@@ -95,7 +94,6 @@ public class MeetingDialog extends AppCompatDialogFragment{
             public void onShow(final DialogInterface dialog) {
                 ((AlertDialog)dialog).getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
-
                         String subject = mSubject_ET.getText().toString();
                         String hour = mHour_TV.getText().toString();
                         String place = mPlace_ET.getText().toString();
@@ -160,6 +158,7 @@ public class MeetingDialog extends AppCompatDialogFragment{
         mDatePicker_IB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //for configuring current device date
                 mCalendar = Calendar.getInstance();
                 mCurrentYear = mCalendar.get(Calendar.YEAR);
                 mCurrentMonth = mCalendar.get(Calendar.MONTH);
@@ -183,5 +182,4 @@ public class MeetingDialog extends AppCompatDialogFragment{
             }
         });
     }
-
 }

@@ -67,13 +67,13 @@ public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.View
     }
 
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView mMeetingInformation;
         private TextView mMeetingParticipants;
         private ImageView mDeleteImage;
         private ImageView mAvatarColor;
 
-        public ViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
+        ViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
 
             mMeetingInformation = itemView.findViewById(R.id.meeting_information_TV);

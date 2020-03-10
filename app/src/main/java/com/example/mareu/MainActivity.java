@@ -51,9 +51,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void buildRecyclerView() {
-        mRecyclerView = findViewById(R.id.recyclerViewList); //ok
+        mRecyclerView = findViewById(R.id.recyclerViewList);
         // get List and adapt to RecyclerView
-        mMeetingAdapter= new MyMeetingAdapter(mMeetingApiService.getMeetingsList());
+        mMeetingAdapter = new MyMeetingAdapter(mMeetingApiService.getMeetingsList());
 
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -62,7 +62,8 @@ public class MainActivity extends AppCompatActivity {
         mMeetingAdapter.setOnItemClickListener(new MyMeetingAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Toast.makeText(MainActivity.this, "La date de la réunion est le "+dateAndTime(position), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "La date de la réunion est le "
+                        +dateAndTime(position), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -91,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    //for choosing option in Menu Item
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
@@ -101,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
         if(id == R.id.item_2){
             mMeetingApiService.sortMeetingsPlaceZA();
         }
-
         if(id == R.id.item_3){
             mMeetingApiService.sortMeetingsChronologicalOrder();
         }
@@ -112,10 +113,8 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     public void openDialog(){
         MeetingDialog meetingDialog = new MeetingDialog();
         meetingDialog.show(getSupportFragmentManager(),"opens the dialog box");
     }
-
 }
