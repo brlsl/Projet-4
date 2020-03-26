@@ -1,5 +1,4 @@
 package com.example.mareu;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,12 +18,9 @@ import com.example.mareu.service.MeetingApiService;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
-
     //for design
     static RecyclerView mRecyclerView;
     static MyMeetingAdapter mMeetingAdapter;
-    private FloatingActionButton fab_button;
-    private RecyclerView.LayoutManager mLayoutManager;
 
     //for data
     private MeetingApiService mMeetingApiService;
@@ -39,22 +35,23 @@ public class MainActivity extends AppCompatActivity {
 
         buildRecyclerView();
 
-        // when user clicks on fab, it opens a dialog window
+        //declaration
+        FloatingActionButton fab_button;
         fab_button = findViewById(R.id.fab_add_reunion);
+        // when user clicks on fab, it opens a dialog window
         fab_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openDialog();
             }
         });
-
     }
-
     private void buildRecyclerView() {
         mRecyclerView = findViewById(R.id.recyclerViewList);
         // get List and adapt to RecyclerView
         mMeetingAdapter = new MyMeetingAdapter(mMeetingApiService.getMeetingsList());
 
+        RecyclerView.LayoutManager mLayoutManager;
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mMeetingAdapter);
@@ -78,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
         MyMeetingAdapter.mMeetingList.remove(position);
         mMeetingAdapter.notifyItemRemoved(position);
     }
-
     public String dateAndTime(int position){
         Meeting meeting = MyMeetingAdapter.mMeetingList.get(position);
         return meeting.getMeetingDate() +" à "+ meeting.getHour();

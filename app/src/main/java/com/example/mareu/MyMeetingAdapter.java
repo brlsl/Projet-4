@@ -22,9 +22,7 @@ public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.View
 
     static List<Meeting> mMeetingList;
     private OnItemClickListener mListener;
-
     private static SimpleDateFormat sdf;
-
 
     public interface OnItemClickListener{
         void onItemClick(int position);
@@ -60,12 +58,10 @@ public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.View
         return mMeetingList.size();
     }
 
-    private static Date getDateWithoutTimeUsingFormat()
-            throws ParseException {
+    private static Date getDateWithoutTimeUsingFormat() throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
         return formatter.parse(formatter.format(new Date()));
     }
-
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView mMeetingInformation;
@@ -131,8 +127,6 @@ public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.View
                 // cas où le format de la date est erronée
                 mAvatarColor.setColorFilter(Color.parseColor("#AAAAAA"));
             }
-
         }
-
     }
 }

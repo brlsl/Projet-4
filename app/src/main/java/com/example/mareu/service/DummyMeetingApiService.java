@@ -78,7 +78,6 @@ public class DummyMeetingApiService implements MeetingApiService{
             @Override
             public int compare(Meeting o1, Meeting o2) {
                 sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.FRANCE);
-
                 Date conversion1 = null;
                 try {
                     conversion1 = sdf.parse(o1.getFusion());

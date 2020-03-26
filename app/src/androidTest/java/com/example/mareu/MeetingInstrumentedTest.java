@@ -165,7 +165,6 @@ public class MeetingInstrumentedTest {
                 .atPositionOnView(2, R.id.meeting_information_TV))
                 .check(matches(withText("Réunion C - 19:00 - Luigi")));
     }
-
     @Test
     public void shouldRemoveAndAddMeeting(){
         int ITEM_COUNT = 3;

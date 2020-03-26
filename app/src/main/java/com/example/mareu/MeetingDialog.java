@@ -136,7 +136,6 @@ public class MeetingDialog extends AppCompatDialogFragment{
                 mCurrentMinute = mCalendar.get(Calendar.MINUTE);
 
                 mTimePickerDialog = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
-                    //when user click on the button, it opens the TimePickerDialog
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         if(hourOfDay < 10 && minute <10)
