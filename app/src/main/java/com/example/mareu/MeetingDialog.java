@@ -123,6 +123,7 @@ public class MeetingDialog extends AppCompatDialogFragment{
     private void applyTextsToList(String subject, String hour, String place, String participant, String meetingDate) {
         Meeting new_meeting = new Meeting(place, hour, subject, participant, meetingDate);
         mMeetingApiService.addMeeting(new_meeting);
+
         mMeetingAdapter.notifyDataSetChanged();
     }
 

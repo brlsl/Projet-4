@@ -12,7 +12,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mareu.di.DI;
 import com.example.mareu.model.Meeting;
+import com.example.mareu.service.DummyMeetingApiService;
+import com.example.mareu.service.MeetingApiService;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -89,6 +92,11 @@ public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.View
                 // new String which takes our input to lower case and remove empty spaces at beginning and end
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
+                MeetingApiService mApiService = DI.getMeetingApiService();
+
+                filteredList = mApiService.filterMeetingList(filterPattern);
+
+                /*
                 for (Meeting meeting : mMeetingListFiltered){
                     if(meeting.getPlace().toLowerCase().contains(filterPattern)){
                         filteredList.add(meeting);
@@ -97,6 +105,8 @@ public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.View
                         filteredList.add(meeting);
                     }
                 }
+
+                 */
             }
 
             // return our filtered array list as result of perform filtering method to our publishResults method.

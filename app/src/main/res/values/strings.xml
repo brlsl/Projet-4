@@ -2,10 +2,7 @@
     <string name="app_name">Ma réu</string>
     <string name= "dialog_title"> Ajouter une réunion </string>
     <string name="item_menu">item menu</string>
-    <string name="item_1_AZ">Lieu de réunion: A -> Z</string>
-    <string name="item_2_ZA">Lieu de réunion: Z -> A</string>
-    <string name="item_3_chronological">Du plus ancien au plus récent</string>
-    <string name="item_4_anti_chronological">Du plus récent au plus ancien</string>
+    <string name="filtre_date_ou_lieu">Filtre par date ou par lieu</string>
     <string name="hint_sujet" >Indiquez le sujet</string>
     <string name="hint_hour" >Indiquez l\'heure</string>
     <string name="hint_place" >Indiquez le lieu</string>

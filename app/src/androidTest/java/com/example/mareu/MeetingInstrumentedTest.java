@@ -104,24 +104,24 @@ public class MeetingInstrumentedTest {
 
     @Test
     public void filterByPlaceShouldWorks(){
-        onView(withId(R.id.item_action_search))
+        onView(withId(R.id.action_search))
                 .perform(click());
         onView(isAssignableFrom(AutoCompleteTextView.class))
                 .perform(typeText("Mario"));
         onView(new RecyclerViewMatcher(R.id.recyclerViewList)
-                .atPositionOnView(1, R.id.meeting_information_TV))
+                .atPositionOnView(0, R.id.meeting_information_TV))
                 .check(matches(withText("Réunion B - 16:00 - Mario")));
     }
 
 
     @Test
     public void filterByDateShouldWorks(){
-        onView(withId(R.id.item_action_search))
+        onView(withId(R.id.action_search))
                 .perform(click());
         onView(isAssignableFrom(AutoCompleteTextView.class))
                 .perform(typeText("18/11/2020"));
         onView(new RecyclerViewMatcher(R.id.recyclerViewList)
-                .atPositionOnView(2, R.id.meeting_information_TV))
+                .atPositionOnView(0, R.id.meeting_information_TV))
                 .check(matches(withText("Réunion C - 19:00 - Luigi")));
     }
 

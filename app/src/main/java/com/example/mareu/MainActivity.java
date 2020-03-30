@@ -1,6 +1,5 @@
 package com.example.mareu;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Toast;
 
@@ -89,14 +87,14 @@ public class MainActivity extends AppCompatActivity {
     //for menu item in action bar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
 
-        MenuItem menuItem = menu.findItem(R.id.item_action_search);
+        MenuItem menuItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) menuItem.getActionView();
 
-        searchView.setQueryHint("Filtrez par date (jj/mm/aaaa) ou par lieu");
-
+        searchView.setQueryHint("Filtrez par date ou par lieu");
         searchView.setMaxWidth(3840); // in pixel
         searchView.setImeOptions(EditorInfo.IME_ACTION_DONE); //in keyboard
 
