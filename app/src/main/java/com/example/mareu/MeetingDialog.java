@@ -124,6 +124,7 @@ public class MeetingDialog extends AppCompatDialogFragment{
         Meeting new_meeting = new Meeting(place, hour, subject, participant, meetingDate);
         mMeetingApiService.addMeeting(new_meeting);
 
+        mMeetingAdapter.mMeetingListFiltered.add(new_meeting);
         mMeetingAdapter.notifyDataSetChanged();
     }
 
