@@ -2,12 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
     <item
-        android:id="@+id/action_search"
-        android:title="Search"
-        android:icon="@drawable/ic_search"
+        android:id="@+id/item_action_search"
+        android:title="Filtre par date ou par lieu"
+        android:icon="@drawable/ic_filter_list_white_24dp"
         app:showAsAction="always|collapseActionView"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-        />
+      />
 
 </menu>

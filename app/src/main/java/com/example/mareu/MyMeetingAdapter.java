@@ -24,14 +24,12 @@ import java.util.Locale;
 public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.ViewHolder> implements Filterable {
 
     //complete list of recyclerview
-    private List<Meeting> mMeetingListOriginal;
-    //list for filterable
-    private List<Meeting> mMeetingListFull;
+    public List<Meeting> mMeetingListOriginal;
+    //list to filter
+    public List<Meeting> mMeetingListFiltered;
 
     private OnItemClickListener mListener;
     private static SimpleDateFormat sdf;
-
-
 
     public interface OnItemClickListener{
         void onItemClick(int position);
@@ -48,8 +46,8 @@ public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.View
     MyMeetingAdapter(List<Meeting> meetingList) {
         this.mMeetingListOriginal = meetingList;
         //creation of new array list which contains the same items as our meetingList but we can use
-        // it independently from mMeetingListFull
-        mMeetingListFull = new ArrayList<>(meetingList);
+        // it independently from mMeetingListFiltered
+        mMeetingListFiltered = new ArrayList<>(meetingList);
 
         sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
     }
@@ -85,20 +83,19 @@ public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.View
 
             //if input field is empty, we want to show all results of our list
             if (constraint == null || constraint.length() == 0){
-                filteredList.addAll(mMeetingListFull);
+                filteredList.addAll(mMeetingListFiltered);
             }
             else{
                 // new String which takes our input to lower case and remove empty spaces at beginning and end
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
-                for (Meeting meeting : mMeetingListFull){
+                for (Meeting meeting : mMeetingListFiltered){
                     if(meeting.getPlace().toLowerCase().contains(filterPattern)){
                         filteredList.add(meeting);
                     }
                     else if(meeting.getMeetingDate().contains(filterPattern)){
                         filteredList.add(meeting);
                     }
-
                 }
             }
 

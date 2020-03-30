@@ -1,5 +1,6 @@
 package com.example.mareu;
 
+import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
@@ -22,6 +23,7 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
+import static androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -98,73 +100,31 @@ public class MeetingInstrumentedTest {
         onView(withText("OK")).perform(click());
     }
 
+
+
     @Test
-    public void chronologicalOrderShouldWorks(){
-        onView(withId(R.id.item_menu))
+    public void filterByPlaceShouldWorks(){
+        onView(withId(R.id.item_action_search))
                 .perform(click());
-        onView(withText("Du plus ancien au plus récent"))
-                .perform(click());
-        onView(new RecyclerViewMatcher(R.id.recyclerViewList)
-                .atPositionOnView(0, R.id.meeting_information_TV))
-                .check(matches(withText("Réunion A - 14:00 - Peach"))); // date 01/01/2019
+        onView(isAssignableFrom(AutoCompleteTextView.class))
+                .perform(typeText("Mario"));
         onView(new RecyclerViewMatcher(R.id.recyclerViewList)
                 .atPositionOnView(1, R.id.meeting_information_TV))
-                .check(matches(withText("Réunion C - 19:00 - Luigi"))); // date 18/11/2020
-        onView(new RecyclerViewMatcher(R.id.recyclerViewList)
-                .atPositionOnView(2, R.id.meeting_information_TV)) // date 31/03/2021
                 .check(matches(withText("Réunion B - 16:00 - Mario")));
     }
 
-    @Test
-    public void antiChronologicalOrderShouldWorks(){
-        onView(withId(R.id.item_menu))
-                .perform(click());
-        onView(withText("Du plus récent au plus ancien"))
-                .perform(click());
-        onView(new RecyclerViewMatcher(R.id.recyclerViewList)
-                .atPositionOnView(0, R.id.meeting_information_TV))
-                .check(matches(withText("Réunion B - 16:00 - Mario"))); //date 31/03/2021
-        onView(new RecyclerViewMatcher(R.id.recyclerViewList)
-                .atPositionOnView(1, R.id.meeting_information_TV))
-                .check(matches(withText("Réunion C - 19:00 - Luigi"))); //date 18/11/2020
-        onView(new RecyclerViewMatcher(R.id.recyclerViewList)
-                .atPositionOnView(2, R.id.meeting_information_TV))
-                .check(matches(withText("Réunion A - 14:00 - Peach"))); // date 01/01/2019
-    }
 
     @Test
-    public void alphabeticalOrderPlaceShouldWorks(){
-        onView(withId(R.id.item_menu))
+    public void filterByDateShouldWorks(){
+        onView(withId(R.id.item_action_search))
                 .perform(click());
-        onView(withText("Lieu de réunion: A -> Z"))
-                .perform(click());
-        onView(new RecyclerViewMatcher(R.id.recyclerViewList)
-                .atPositionOnView(0, R.id.meeting_information_TV))
-                .check(matches(withText("Réunion C - 19:00 - Luigi")));
-        onView(new RecyclerViewMatcher(R.id.recyclerViewList)
-                .atPositionOnView(1, R.id.meeting_information_TV))
-                .check(matches(withText("Réunion B - 16:00 - Mario")));
-        onView(new RecyclerViewMatcher(R.id.recyclerViewList)
-                .atPositionOnView(2, R.id.meeting_information_TV))
-                .check(matches(withText("Réunion A - 14:00 - Peach")));
-    }
-
-    @Test
-    public void antiAlphabeticalOrderPlaceShouldWorks(){
-        onView(withId(R.id.item_menu))
-                .perform(click());
-        onView(withText("Lieu de réunion: Z -> A"))
-                .perform(click());
-        onView(new RecyclerViewMatcher(R.id.recyclerViewList)
-                .atPositionOnView(0, R.id.meeting_information_TV))
-                .check(matches(withText("Réunion A - 14:00 - Peach")));
-        onView(new RecyclerViewMatcher(R.id.recyclerViewList)
-                .atPositionOnView(1, R.id.meeting_information_TV))
-                .check(matches(withText("Réunion B - 16:00 - Mario")));
+        onView(isAssignableFrom(AutoCompleteTextView.class))
+                .perform(typeText("18/11/2020"));
         onView(new RecyclerViewMatcher(R.id.recyclerViewList)
                 .atPositionOnView(2, R.id.meeting_information_TV))
                 .check(matches(withText("Réunion C - 19:00 - Luigi")));
     }
+
     @Test
     public void shouldRemoveAndAddMeeting(){
         int ITEM_COUNT = 3;

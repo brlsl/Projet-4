@@ -1,5 +1,6 @@
 package com.example.mareu;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,6 +11,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Toast;
 
 import com.example.mareu.di.DI;
@@ -73,7 +76,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void removeItem(int position){
+        // delete from original and filtered list
         mMeetingApiService.getMeetingsList().remove(position);
+        mMeetingAdapter.mMeetingListFiltered.remove(position);
         mMeetingAdapter.notifyItemRemoved(position);
     }
     public String dateAndTime(int position){
@@ -87,8 +92,14 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
 
-        MenuItem menuItem = menu.findItem(R.id.action_search);
+        MenuItem menuItem = menu.findItem(R.id.item_action_search);
         SearchView searchView = (SearchView) menuItem.getActionView();
+
+        searchView.setQueryHint("Filtrez par date (jj/mm/aaaa) ou par lieu");
+
+        searchView.setMaxWidth(3840); // in pixel
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE); //in keyboard
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -103,28 +114,7 @@ public class MainActivity extends AppCompatActivity {
         });
         return true;
     }
-/*
-    //for choosing option in Menu Item
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
 
-        if(id == R.id.item_1){
-            mMeetingApiService.sortMeetingsPlaceAZ();
-        }
-        if(id == R.id.item_2){
-            mMeetingApiService.sortMeetingsPlaceZA();
-        }
-        if(id == R.id.item_3){
-            mMeetingApiService.sortMeetingsChronologicalOrder();
-        }
-        if(id == R.id.item_4){
-            mMeetingApiService.sortMeetingsAntiChronological();
-        }
-        mMeetingAdapter.notifyDataSetChanged();
-        return super.onOptionsItemSelected(item);
-    }
-*/
     public void openDialog(){
         MeetingDialog meetingDialog = new MeetingDialog();
         meetingDialog.show(getSupportFragmentManager(),"opens the dialog box");
