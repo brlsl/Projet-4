@@ -6,7 +6,6 @@ public class Meeting {
     private String subject;
     private String participant;
     private String meetingDate;
-    private String fusion;
 
 
     public Meeting(String subject, String hour, String place, String participant, String meetingDate) {
@@ -15,7 +14,6 @@ public class Meeting {
         this.place = place;
         this.participant = participant;
         this.meetingDate= meetingDate;
-        this.fusion = meetingDate+" "+hour;
     }
 
     public String getHour() {
@@ -38,8 +36,5 @@ public class Meeting {
         return meetingDate;
     }
 
-    public String getFusion() {
-        return fusion;
-    }
 }
 

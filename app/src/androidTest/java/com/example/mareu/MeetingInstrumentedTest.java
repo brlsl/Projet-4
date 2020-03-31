@@ -14,11 +14,13 @@ import com.example.mareu.utils.DeleteMeetingAction;
 import com.example.mareu.utils.RecyclerViewMatcher;
 
 import org.hamcrest.Matchers;
+import org.hamcrest.core.AllOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.clearText;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
@@ -111,6 +113,8 @@ public class MeetingInstrumentedTest {
         onView(new RecyclerViewMatcher(R.id.recyclerViewList)
                 .atPositionOnView(0, R.id.meeting_information_TV))
                 .check(matches(withText("Réunion B - 16:00 - Mario")));
+        onView(isAssignableFrom(AutoCompleteTextView.class))
+                .perform(clearText());
     }
 
 
@@ -123,6 +127,9 @@ public class MeetingInstrumentedTest {
         onView(new RecyclerViewMatcher(R.id.recyclerViewList)
                 .atPositionOnView(0, R.id.meeting_information_TV))
                 .check(matches(withText("Réunion C - 19:00 - Luigi")));
+        onView(isAssignableFrom(AutoCompleteTextView.class))
+                .perform(clearText());
+
     }
 
     @Test
