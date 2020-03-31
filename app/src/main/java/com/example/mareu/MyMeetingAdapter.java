@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mareu.di.DI;
 import com.example.mareu.model.Meeting;
-import com.example.mareu.service.DummyMeetingApiService;
 import com.example.mareu.service.MeetingApiService;
 
 import java.text.ParseException;
@@ -83,7 +82,6 @@ public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.View
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             List<Meeting> filteredList = new ArrayList<>();
-
             //if input field is empty, we want to show all results of our list
             if (constraint == null || constraint.length() == 0){
                 filteredList.addAll(mMeetingListFiltered);
@@ -91,22 +89,9 @@ public class MyMeetingAdapter extends RecyclerView.Adapter<MyMeetingAdapter.View
             else{
                 // new String which takes our input to lower case and remove empty spaces at beginning and end
                 String filterPattern = constraint.toString().toLowerCase().trim();
-
+                // filter function from service
                 MeetingApiService mApiService = DI.getMeetingApiService();
-
-                filteredList = mApiService.filterMeetingList(filterPattern);
-
-                /*
-                for (Meeting meeting : mMeetingListFiltered){
-                    if(meeting.getPlace().toLowerCase().contains(filterPattern)){
-                        filteredList.add(meeting);
-                    }
-                    else if(meeting.getMeetingDate().contains(filterPattern)){
-                        filteredList.add(meeting);
-                    }
-                }
-
-                 */
+                filteredList = mApiService.filterMeetingListByDateOrPlace(filterPattern);
             }
 
             // return our filtered array list as result of perform filtering method to our publishResults method.

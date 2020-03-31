@@ -24,7 +24,7 @@ public class MeetingServiceTest {
     private MeetingApiService service;
     private final Meeting meeting1 = new Meeting("Sujet 1", "13:00", "BBB", "test@gmail.com","18/11/2020");
     private final Meeting meeting2 = new Meeting("Sujet 2", "11:00", "AAA", "test@gmail.com","20/02/2022");
-    private final Meeting meeting3 = new Meeting("Sujet 3", "12:00", "CCC", "test@gmail.com","18/11/2020");
+    private final Meeting meeting3 = new Meeting("Sujet 3", "12:00", "CCC", "test@gmail.com","01/01/2021");
 
     @Before
     public void setUp(){
@@ -48,56 +48,30 @@ public class MeetingServiceTest {
     @Test
     public void removeMeetingWithSuccess(){
         Meeting meetingToAdd = new Meeting("Sujet Test4","00:00","Place4","test@gmail.com","20/10/2020");
+        service.addMeeting(meetingToAdd);
         service.deleteMeeting(meetingToAdd);
         assertFalse(service.getMeetingsList().contains(meetingToAdd));
     }
 
     @Test
-    public void sortMeetingListAZ(){
+    public void filterMeetingByPlaceShouldWorks(){
         service.getMeetingsList().clear();
         service.addMeeting(meeting1);
         service.addMeeting(meeting2);
         service.addMeeting(meeting3);
-        service.sortMeetingsPlaceAZ();
-        assertEquals(service.getMeetingsList().get(0).getPlace(), meeting2.getPlace());
-        assertEquals(service.getMeetingsList().get(1).getPlace(), meeting1.getPlace());
-        assertEquals(service.getMeetingsList().get(2).getPlace(), meeting3.getPlace());
+        assertTrue(service.filterMeetingListByDateOrPlace("b").contains(meeting1));
+        assertFalse(service.filterMeetingListByDateOrPlace("b").contains(meeting2));
+        assertFalse(service.filterMeetingListByDateOrPlace("b").contains(meeting3));
     }
 
     @Test
-    public void sortMeetingZA(){
+    public void filterMeetingByDateShouldWorks(){
         service.getMeetingsList().clear();
         service.addMeeting(meeting1);
         service.addMeeting(meeting2);
         service.addMeeting(meeting3);
-        service.sortMeetingsPlaceZA();
-        assertEquals(service.getMeetingsList().get(0).getPlace(), meeting3.getPlace());
-        assertEquals(service.getMeetingsList().get(1).getPlace(), meeting1.getPlace());
-        assertEquals(service.getMeetingsList().get(2).getPlace(), meeting2.getPlace());
-    }
-
-    @Test
-    public void sortMeetingChronological(){
-        service.getMeetingsList().clear();
-        service.addMeeting(meeting1);
-        service.addMeeting(meeting2);
-        service.addMeeting(meeting3);
-        service.sortMeetingsChronologicalOrder();
-        assertEquals(service.getMeetingsList().get(0).getFusion(), meeting3.getFusion());
-        assertEquals(service.getMeetingsList().get(1).getFusion(), meeting1.getFusion());
-        assertEquals(service.getMeetingsList().get(2).getFusion(), meeting2.getFusion());
-
-    }
-
-    @Test
-    public void sortMeetingAntiChronological(){
-        service.getMeetingsList().clear();
-        service.addMeeting(meeting1);
-        service.addMeeting(meeting2);
-        service.addMeeting(meeting3);
-        service.sortMeetingsAntiChronological();
-        assertEquals(service.getMeetingsList().get(0).getFusion(), meeting2.getFusion());
-        assertEquals(service.getMeetingsList().get(1).getFusion(), meeting1.getFusion());
-        assertEquals(service.getMeetingsList().get(2).getFusion(), meeting3.getFusion());
+        assertFalse(service.filterMeetingListByDateOrPlace("2022").contains(meeting1));
+        assertTrue(service.filterMeetingListByDateOrPlace("2022").contains(meeting2));
+        assertFalse(service.filterMeetingListByDateOrPlace("2022").contains(meeting3));
     }
 }

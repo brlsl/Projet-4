@@ -22,7 +22,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class MainActivity extends AppCompatActivity {
     //for design
     static RecyclerView mRecyclerView;
-    static MyMeetingAdapter mMeetingAdapter;
+    static MyMeetingAdapter mMeetingListAdapter;
 
     //for data
     private MeetingApiService mMeetingApiService = DI.getMeetingApiService();
@@ -51,14 +51,14 @@ public class MainActivity extends AppCompatActivity {
     private void buildRecyclerView() {
         mRecyclerView = findViewById(R.id.recyclerViewList);
         // get List and adapt to RecyclerView
-        mMeetingAdapter = new MyMeetingAdapter(mMeetingApiService.getMeetingsList());
+        mMeetingListAdapter = new MyMeetingAdapter(mMeetingApiService.getMeetingsList());
 
         RecyclerView.LayoutManager mLayoutManager;
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(mMeetingAdapter);
+        mRecyclerView.setAdapter(mMeetingListAdapter);
 
-        mMeetingAdapter.setOnItemClickListener(new MyMeetingAdapter.OnItemClickListener() {
+        mMeetingListAdapter.setOnItemClickListener(new MyMeetingAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 Toast.makeText(MainActivity.this, "La date de la réunion est le "
@@ -76,8 +76,8 @@ public class MainActivity extends AppCompatActivity {
     public void removeItem(int position){
         // delete from original and filtered list
         mMeetingApiService.getMeetingsList().remove(position);
-        mMeetingAdapter.mMeetingListFiltered.remove(position);
-        mMeetingAdapter.notifyItemRemoved(position);
+        mMeetingListAdapter.mMeetingListFiltered.remove(position);
+        mMeetingListAdapter.notifyItemRemoved(position);
     }
     public String dateAndTime(int position){
         Meeting meeting = mMeetingApiService.getMeetingsList().get(position);
@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                mMeetingAdapter.getFilter().filter(newText);
+                mMeetingListAdapter.getFilter().filter(newText);
                 return false;
             }
         });

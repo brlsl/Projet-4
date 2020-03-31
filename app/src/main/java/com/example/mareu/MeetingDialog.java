@@ -25,7 +25,7 @@ import com.example.mareu.service.MeetingApiService;
 
 import java.util.Calendar;
 
-import static com.example.mareu.MainActivity.mMeetingAdapter;
+import static com.example.mareu.MainActivity.mMeetingListAdapter;
 
 public class MeetingDialog extends AppCompatDialogFragment{
 
@@ -124,8 +124,8 @@ public class MeetingDialog extends AppCompatDialogFragment{
         Meeting new_meeting = new Meeting(place, hour, subject, participant, meetingDate);
         mMeetingApiService.addMeeting(new_meeting);
 
-        mMeetingAdapter.mMeetingListFiltered.add(new_meeting);
-        mMeetingAdapter.notifyDataSetChanged();
+        mMeetingListAdapter.mMeetingListFiltered.add(new_meeting);
+        mMeetingListAdapter.notifyDataSetChanged();
     }
 
     private void setTimePickerDialog(){
