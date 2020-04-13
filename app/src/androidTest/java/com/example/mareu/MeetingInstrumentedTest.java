@@ -14,7 +14,6 @@ import com.example.mareu.utils.DeleteMeetingAction;
 import com.example.mareu.utils.RecyclerViewMatcher;
 
 import org.hamcrest.Matchers;
-import org.hamcrest.core.AllOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
